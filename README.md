@@ -27,10 +27,16 @@ This is a modern portfolio website that uses **vertical scrolling** to create a 
 ├── public/          # Static assets
 ├── src/
 │   ├── components/  # Reusable components
-│   ├── pages/       # Application pages
 │   ├── App.jsx      # Main app file
 │   ├── main.jsx     # Entry point
-│   └── styles/      # TailwindCSS styles
+│   └── index.css    # TailwindCSS styles
 ├── package.json     # Project dependencies
 └── vite.config.js   # Vite configuration
 ```
+
+## 📞 Contact
+
+For questions or collaborations, reach out to Swapnil Shrestha:
+
+GitHub: ShresthaSwapnil
+Email: shresthaswapnil03@gmail.com
