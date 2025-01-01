@@ -18,6 +18,7 @@ This is a modern portfolio website that uses **vertical scrolling** to create a 
 - **[Vite + React](https://vitejs.dev/)**: A fast build tool and framework for modern web development.
 - **[TailwindCSS](https://tailwindcss.com/)**: A utility-first CSS framework for rapid UI development.
 - **[Framer Motion](https://www.framer.com/motion/)**: A library for advanced animations and smooth motion.
+- **[Supabase](https://www.supabase.com)**: An open source Firebase alternative to store messages.
 
 ---
 
