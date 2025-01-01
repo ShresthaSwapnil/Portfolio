@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import supabase from "../supabase-client";
-import { useState } from "react";
 
 const Contact = () => {
   const handleSubmit = async (event) => {
