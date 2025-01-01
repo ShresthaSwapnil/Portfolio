@@ -1,19 +1,20 @@
 import { motion } from "framer-motion";
-// import Image1 from "../assets/1.JPG";
 
 const Projects = () => {
   const projects = [
     {
-      title: "Hackathon",
-      description: "A full-stack web application built with React and Node.js",
-      tags: ["React", "Node.js", "MongoDB"],
+      title: "Mobile App UI/UX Design Projects",
+      description:
+        "Redesigned QFX Cinemas mobile app interface to enhance user experience and functionality using Figma Conceptualized and designed Huba Nepal clothing app, focusing on modern e-commerce design principlesCreated high-fidelity prototypes and user flows using Figma and Canva",
+      tags: ["Figma", "Canva"],
       image: "/images/1.JPG",
     },
     {
       title: "Hackathon Website",
-      description: "Mobile-first responsive website with modern animations",
+      description:
+        "Mobile-first responsive website with modern animations. Implemented responsive design principles to ensure optimal user experience across devices",
       tags: ["React", "Tailwind CSS", "GSAP"],
-      image: "../asset/2.JPG",
+      image: "/images/Hackathon.jpg",
     },
     // Add more projects as needed
   ];

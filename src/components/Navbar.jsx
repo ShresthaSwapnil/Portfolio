@@ -12,6 +12,13 @@ const Navbar = () => {
     }
   }, [darkMode]);
 
+  const handleDownloadCV = () => {
+    const link = document.createElement("a");
+    link.href = "/Swapnil CV.pdf"; // Replace with the actual path to your CV file
+    link.download = "Swapnil CV.pdf"; // Replace with your desired file name
+    link.click();
+  };
+
   return (
     <nav className="fixed top-0 w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -20,6 +27,14 @@ const Navbar = () => {
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
               Portfolio
             </h1>
+          </div>
+          <div className="block md:hidden">
+            <button
+              onClick={handleDownloadCV}
+              className="p-2 rounded-lg bg-green-500 text-white hover:bg-green-600"
+            >
+              Download CV
+            </button>
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-4">
@@ -47,6 +62,12 @@ const Navbar = () => {
               >
                 Contact
               </a>
+              <button
+                onClick={handleDownloadCV}
+                className="p-2 rounded-lg bg-green-500 text-white hover:bg-green-600"
+              >
+                Download CV
+              </button>
               <button
                 onClick={() => setDarkMode(!darkMode)}
                 className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600"
