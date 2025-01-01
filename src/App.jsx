@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import About from "./components/About";
@@ -8,12 +8,44 @@ import Contact from "./components/Contact";
 import MouseTracker from "./components/MouseTracker";
 
 const App = () => {
+  const [isMobile, setIsMobile] = useState(false);
   const targetRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-  });
+  const { scrollYProgress } = useScroll();
 
-  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-75%"]);
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-76%"]);
+
+  if (isMobile) {
+    return (
+      <div className="bg-white dark:bg-gray-900 min-h-screen">
+        <Navbar />
+        <div className="flex flex-col">
+          <Home />
+          <About />
+          <Projects />
+          <Contact />
+        </div>
+        <motion.div className="fixed bottom-0 left-0 right-0 h-1 bg-blue-600/20">
+          <motion.div
+            className="h-full bg-green-600"
+            style={{
+              scaleX: scrollYProgress,
+              transformOrigin: "0%",
+            }}
+          />
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white dark:bg-gray-900 min-h-screen relative">
@@ -31,8 +63,7 @@ const App = () => {
         </div>
       </section>
 
-      {/* Bottom Progress Bar */}
-      <motion.div className="fixed bottom-0 left-0 right-0 h-1 bg-green-600/20">
+      <motion.div className="fixed bottom-0 left-0 right-0 h-1 bg-blue-600/20">
         <motion.div
           className="h-full bg-green-600"
           style={{

@@ -31,7 +31,7 @@ const Navbar = () => {
           <div className="block md:hidden">
             <button
               onClick={handleDownloadCV}
-              className="p-2 rounded-lg bg-green-500 text-white hover:bg-green-600"
+              className="p-2 rounded-lg bg-green-600 text-white hover:bg-green-700"
             >
               Download CV
             </button>
@@ -64,7 +64,7 @@ const Navbar = () => {
               </a>
               <button
                 onClick={handleDownloadCV}
-                className="p-2 rounded-lg bg-green-500 text-white hover:bg-green-600"
+                className="p-2 rounded-lg bg-green-600 text-white hover:bg-green-700"
               >
                 Download CV
               </button>

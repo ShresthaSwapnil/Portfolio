@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import { Github, Linkedin, Instagram, Mail } from "lucide-react";
 
 const Home = () => {
   const [currentTitle, setCurrentTitle] = useState(0);
@@ -8,6 +9,29 @@ const Home = () => {
     "a UI/UX Designer",
     "a Problem Solver",
     "an Innovation Enthusiast",
+  ];
+
+  const socials = [
+    {
+      icon: <Github className="w-6 h-6" />,
+      href: "https://github.com/ShresthaSwapnil",
+      label: "GitHub",
+    },
+    {
+      icon: <Linkedin className="w-6 h-6" />,
+      href: "https://www.linkedin.com/in/swapnil-shrestha-b5792925b/",
+      label: "LinkedIn",
+    },
+    {
+      icon: <Instagram className="w-6 h-6" />,
+      href: "https://www.instagram.com/shresthaswapnil/",
+      label: "Instagram",
+    },
+    {
+      icon: <Mail className="w-6 h-6" />,
+      href: "mailto:shresthaswapnil03@gmail.com",
+      label: "Email",
+    },
   ];
 
   useEffect(() => {
@@ -50,11 +74,33 @@ const Home = () => {
           </AnimatePresence>
         </div>
 
+        {/* Social Icons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-8"
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="flex justify-center gap-6 mt-8 mb-8"
+        >
+          {socials.map((social) => (
+            <motion.a
+              key={social.label}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors"
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 0.95 }}
+              aria-label={social.label}
+            >
+              {social.icon}
+            </motion.a>
+          ))}
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
         >
           <a
             href="#contact"
