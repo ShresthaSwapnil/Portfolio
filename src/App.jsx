@@ -22,7 +22,7 @@ const App = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-76%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-75%"]);
 
   if (isMobile) {
     return (

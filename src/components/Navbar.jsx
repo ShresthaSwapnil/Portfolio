@@ -28,7 +28,17 @@ const Navbar = () => {
               Portfolio
             </h1>
           </div>
-          <div className="block md:hidden">
+          <div className="md:hidden flex items-center space-x-4">
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600"
+            >
+              {darkMode ? (
+                <Sun className="w-5 h-5" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
+            </button>
             <button
               onClick={handleDownloadCV}
               className="p-2 rounded-lg bg-green-600 text-white hover:bg-green-700"
