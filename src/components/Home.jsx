@@ -103,8 +103,10 @@ const Home = () => {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           <a
-            href="#contact"
-            className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors inline-block"
+            onClick={() => {
+              window.scrollTo(0, window.innerHeight * 3);
+            }}
+            className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors inline-block cursor-pointer"
           >
             Get in Touch
           </a>

@@ -6,6 +6,13 @@ const Navbar = () => {
   const [activeSection, setActiveSection] = useState("home");
   const yValue = window.innerHeight;
 
+  const handleDownloadCV = () => {
+    const link = document.createElement("a");
+    link.href = "/Swapnil CV.pdf"; // Replace with the actual path to your CV file
+    link.download = "Swapnil CV.pdf"; // Replace with your desired file name
+    link.click();
+  };
+
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
@@ -45,6 +52,24 @@ const Navbar = () => {
               Portfolio
             </h1>
           </div>
+          <div className="md:hidden flex items-center space-x-4">
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600"
+            >
+              {darkMode ? (
+                <Sun className="w-5 h-5" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
+            </button>
+            <button
+              onClick={handleDownloadCV}
+              className="p-2 rounded-lg bg-green-600 text-white hover:bg-green-700"
+            >
+              Download CV
+            </button>
+          </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-4">
               {["home", "about", "projects", "contact"].map((section) => (
@@ -71,6 +96,12 @@ const Navbar = () => {
                   {section.charAt(0).toUpperCase() + section.slice(1)}
                 </a>
               ))}
+              <button
+                onClick={handleDownloadCV}
+                className="p-2 rounded-lg bg-green-600 text-white hover:bg-green-700"
+              >
+                Download CV
+              </button>
               <button
                 onClick={() => setDarkMode(!darkMode)}
                 className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600"
