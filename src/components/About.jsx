@@ -4,7 +4,7 @@ const About = () => {
   return (
     <section
       id="about"
-      className="w-screen h-screen flex items-center justify-center p-8 bg-gray-50 dark:bg-gray-800 max-sm:mb-64"
+      className="w-screen h-screen flex items-center justify-center p-8 bg-gray-50 dark:bg-gray-800 max-sm:mb-32 max-sm:h-[150dvh]"
     >
       <div className="max-w-6xl w-full">
         <motion.h2
@@ -38,11 +38,37 @@ const About = () => {
 
           {/* Content Section */}
           <div className="order-1 md:order-2 space-y-6">
-            <p className="text-gray-600 dark:text-gray-300 text-lg">
-              I'm a passionate developer with experience in building modern web
-              applications. My journey in web development started with HTML and
-              CSS, and I've since expanded my skills to include React, Node.js,
-              and many other technologies.
+            <p className="text-gray-700 dark:text-gray-200 text-lg leading-relaxed">
+              Hi, I’m{" "}
+              <span className="font-bold text-green-600 dark:text-green-500">
+                Swapnil Shrestha
+              </span>
+              , an
+              <span className="font-bold"> Aspiring Developer</span> from Nepal
+              skilled in
+              <span className="font-bold"> React</span>,
+              <span className="font-bold"> Tailwind CSS</span>, and
+              <span className="font-bold"> Django</span>. I enjoy crafting
+              intuitive interfaces and am expanding my expertise in
+              <span className="font-bold"> React Native</span> and
+              <span className="font-bold"> Machine Learning</span> through
+              <span className="font-bold"> DataCamp</span>.
+              <br />
+              <br />
+              As the <span className="font-bold">President</span> of
+              <span className="font-bold text-green-600 dark:text-green-500">
+                {" "}
+                MVIC Tech Titan
+              </span>
+              , I lead workshops and hackathons to inspire innovation. I also
+              design <span className="font-bold">impactful ads</span> using
+              <span className="font-bold"> Canva</span>
+              , blending creativity with strategy.
+              <br />
+              <br />
+              <span className="font-bold text-green-600 dark:text-green-500">
+                Let’s collaborate and bring ideas to life!
+              </span>
             </p>
 
             <div>
@@ -56,7 +82,6 @@ const About = () => {
                   "TypeScript",
                   "Tailwind CSS",
                   "MongoDB",
-                  "Next.js",
                   "React Native",
                   "Python",
                   "C#",

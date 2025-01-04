@@ -6,6 +6,7 @@ import About from "./components/About";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import MouseTracker from "./components/MouseTracker";
+import Footer from "./components/Footer";
 
 const App = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -43,6 +44,7 @@ const App = () => {
             }}
           />
         </motion.div>
+        <Footer />
       </div>
     );
   }
@@ -63,7 +65,7 @@ const App = () => {
         </div>
       </section>
 
-      <motion.div className="fixed bottom-0 left-0 right-0 h-1 bg-blue-600/20">
+      <motion.div className="fixed bottom-0 left-0 right-0 h-1 bg-blue-600/20 z-50">
         <motion.div
           className="h-full bg-green-600"
           style={{
@@ -72,6 +74,7 @@ const App = () => {
           }}
         />
       </motion.div>
+      <Footer />
     </div>
   );
 };

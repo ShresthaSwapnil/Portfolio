@@ -104,7 +104,7 @@ const Navbar = () => {
               </button>
               <button
                 onClick={() => setDarkMode(!darkMode)}
-                className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600"
+                className="p-2 rounded-lg bg-gray-200 dark:bg-white hover:bg-gray-300 dark:hover:bg-gray-300"
               >
                 {darkMode ? (
                   <Sun className="w-5 h-5" />
