@@ -7,7 +7,7 @@ const Projects = () => {
       description:
         "Redesigned QFX Cinemas mobile app interface to enhance user experience and functionality using Figma Conceptualized and designed Huba Nepal clothing app, focusing on modern e-commerce design principlesCreated high-fidelity prototypes and user flows using Figma and Canva",
       tags: ["Figma", "Canva"],
-      image: "/images/1.JPG",
+      image: "/images/image.png",
     },
     {
       title: "Hackathon Website",

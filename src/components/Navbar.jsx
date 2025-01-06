@@ -8,8 +8,8 @@ const Navbar = () => {
 
   const handleDownloadCV = () => {
     const link = document.createElement("a");
-    link.href = "/Swapnil CV.pdf"; // Replace with the actual path to your CV file
-    link.download = "Swapnil CV.pdf"; // Replace with your desired file name
+    link.href = "/Swapnil CV.pdf";
+    link.download = "Swapnil CV.pdf";
     link.click();
   };
 
