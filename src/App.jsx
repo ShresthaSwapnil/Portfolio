@@ -8,6 +8,65 @@ import Contact from "./components/Contact";
 import MouseTracker from "./components/MouseTracker";
 import Footer from "./components/Footer";
 
+const ScrollIndicator = () => {
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setVisible(false);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  return (
+    visible && (
+      <motion.div
+        className="fixed bottom-24 left-1/2 transform -translate-x-1/2 flex items-center gap-2 text-gray-600 dark:text-gray-300 z-50"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+      >
+        <motion.p
+          className="text-sm font-medium uppercase tracking-wider"
+          animate={{ x: [0, 10, 0] }}
+          transition={{
+            duration: 1.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          Scroll to explore
+        </motion.p>
+        <motion.svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          animate={{ x: [0, 10, 0] }}
+          transition={{
+            duration: 1.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <path
+            d="M1 8H15M15 8L8 1M15 8L8 15"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </motion.svg>
+      </motion.div>
+    )
+  );
+};
+
 const App = () => {
   const [isMobile, setIsMobile] = useState(false);
   const targetRef = useRef(null);
@@ -53,6 +112,7 @@ const App = () => {
     <div className="bg-white dark:bg-gray-900 min-h-screen relative">
       <Navbar />
       <MouseTracker />
+      <ScrollIndicator />
 
       <section ref={targetRef} className="relative h-[400vh]">
         <div className="sticky top-0 flex h-screen items-center overflow-hidden">

@@ -1,6 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { Github, Linkedin, Instagram, Mail } from "lucide-react";
 
 const Home = () => {
   const [currentTitle, setCurrentTitle] = useState(0);

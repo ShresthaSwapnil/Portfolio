@@ -26,9 +26,9 @@ const About = () => {
             <div className="relative w-full max-w-md mx-auto">
               <div className="aspect-square rounded-2xl overflow-hidden bg-green-100 dark:bg-green-900">
                 <img
-                  src="/images/2.JPG"
+                  src="/images/Swapnil.png"
                   alt="Profile"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all"
                 />
               </div>
               {/* Decorative elements */}
