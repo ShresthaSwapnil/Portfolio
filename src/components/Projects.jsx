@@ -31,14 +31,14 @@ const Projects = () => {
   return (
     <section
       id="projects"
-      className="w-screen h-screen flex items-center justify-center p-8 bg-white dark:bg-gray-900 max-sm:h-[175dvh] max-sm:items-start"
+      className="w-screen h-screen flex items-center justify-center p-8 bg-white dark:bg-gray-900 max-sm:h-[185dvh] max-sm:items-start max-sm:mt-24"
     >
       <div className="max-w-6xl">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-4xl font-bold text-gray-900 dark:text-white mb-8"
+          className="text-4xl font-bold text-gray-900 dark:text-white mb-8 flex justify-center"
         >
           Projects
         </motion.h2>
