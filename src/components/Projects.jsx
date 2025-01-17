@@ -8,6 +8,7 @@ const Projects = () => {
         "Redesigned QFX Cinemas mobile app interface to enhance user experience and functionality using Figma Conceptualized and designed Huba Nepal clothing app, focusing on modern e-commerce design principlesCreated high-fidelity prototypes and user flows using Figma and Canva",
       tags: ["Figma", "Canva"],
       image: "/images/image.png",
+      url: "https://www.figma.com/files/project/273552780",
     },
     {
       title: "Hackathon Website",
@@ -15,8 +16,16 @@ const Projects = () => {
         "Mobile-first responsive website with modern animations. Implemented responsive design principles to ensure optimal user experience across devices",
       tags: ["React", "Tailwind CSS", "GSAP"],
       image: "/images/Hackathon.jpg",
+      url: "https://github.com/ShresthaSwapnil/MVIC_Hackathon",
     },
-    // Add more projects as needed
+    {
+      title: "Simple J.A.R.V.I.S",
+      description:
+        "Created a Simple J.A.R.V.I.S using Python. It can perform various tasks like sending emails, sending WhatsApp Messages, searching on Wikipedia, etc.",
+      tags: ["Python"],
+      image: "/images/jarvis.jpg",
+      url: "https://github.com/ShresthaSwapnil/SimpleJARVIS",
+    },
   ];
 
   return (
@@ -42,7 +51,8 @@ const Projects = () => {
           {projects.map((project, index) => (
             <div
               key={index}
-              className="bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg"
+              className="bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg cursor-pointer"
+              onClick={() => window.open(project.url, "_blank")}
             >
               <img
                 src={project.image}

@@ -27,8 +27,8 @@ const About = () => {
               <div className="aspect-square rounded-2xl overflow-hidden bg-green-100 dark:bg-green-900">
                 <img
                   src="/images/Swapnil.png"
-                  alt="Profile"
-                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all"
+                  alt="Profile Image"
+                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all hover:scale-105"
                 />
               </div>
               {/* Decorative elements */}
@@ -39,7 +39,7 @@ const About = () => {
           {/* Content Section */}
           <div className="order-1 md:order-2 space-y-6">
             <p className="text-gray-700 dark:text-gray-200 text-lg leading-relaxed">
-              Hi, I’m{" "}
+              Hi, I'm{" "}
               <span className="font-bold text-green-600 dark:text-green-500">
                 Swapnil Shrestha
               </span>
