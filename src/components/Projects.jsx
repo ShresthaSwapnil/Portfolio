@@ -31,7 +31,7 @@ const Projects = () => {
   return (
     <section
       id="projects"
-      className="w-screen h-screen flex items-center justify-center p-8 bg-white dark:bg-gray-900"
+      className="w-screen h-screen flex items-center justify-center p-8 bg-white dark:bg-gray-900 max-sm:h-[175dvh] max-sm:items-start"
     >
       <div className="max-w-6xl">
         <motion.h2
