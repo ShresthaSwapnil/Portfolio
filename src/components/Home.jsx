@@ -2,6 +2,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 
 const Home = () => {
+  const handleDownloadCV = () => {
+    const link = document.createElement("a");
+    link.href = "/Swapnil CV.pdf";
+    link.download = "Swapnil CV.pdf";
+    link.click();
+  };
   const [currentTitle, setCurrentTitle] = useState(0);
   const titles = [
     "a Web Developer",
@@ -56,12 +62,10 @@ const Home = () => {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           <a
-            onClick={() => {
-              window.scrollTo(0, window.innerHeight * 3);
-            }}
+            onClick={handleDownloadCV}
             className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors inline-block cursor-pointer"
           >
-            Get in Touch
+            Download CV
           </a>
         </motion.div>
       </div>
