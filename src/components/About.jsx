@@ -15,12 +15,7 @@ const About = () => {
         >
           About Me
         </motion.h2>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="grid md:grid-cols-2 gap-12 items-center"
-        >
+        <motion.div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Image Section */}
           <div className="order-2 md:order-1">
             <div className="relative w-full max-w-md mx-auto">

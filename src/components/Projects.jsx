@@ -51,7 +51,7 @@ const Projects = () => {
           {projects.map((project, index) => (
             <div
               key={index}
-              className="bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg cursor-pointer"
+              className="bg-gray-50 dark:bg-gray-700 rounded-lg overflow-hidden shadow-lg cursor-pointer hover:scale-105 transition-transform hover:shadow-lg dark:hover:shadow-white/30 hover:shadow-black/50"
               onClick={() => window.open(project.url, "_blank")}
             >
               <img
