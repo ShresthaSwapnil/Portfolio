@@ -8,8 +8,8 @@ const Navbar = () => {
 
   const handleDownloadCV = () => {
     const link = document.createElement("a");
-    link.href = "/Swapnil CV.pdf";
-    link.download = "Swapnil CV.pdf";
+    link.href = "/SwapnilCV.pdf";
+    link.download = "SwapnilCV.pdf";
     link.click();
   };
 

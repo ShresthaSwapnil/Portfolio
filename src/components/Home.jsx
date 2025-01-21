@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 const Home = () => {
   const handleDownloadCV = () => {
     const link = document.createElement("a");
-    link.href = "/Swapnil CV.pdf";
-    link.download = "Swapnil CV.pdf";
+    link.href = "/SwapnilCV.pdf";
+    link.download = "SwapnilCV.pdf";
     link.click();
   };
   const [currentTitle, setCurrentTitle] = useState(0);
@@ -62,10 +62,12 @@ const Home = () => {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           <a
-            onClick={handleDownloadCV}
+            href="/SwapnilCV.pdf"
+            target="_blank"
+            // onClick={handleDownloadCV}
             className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors inline-block cursor-pointer"
           >
-            Download CV
+            Preview CV
           </a>
         </motion.div>
       </div>
