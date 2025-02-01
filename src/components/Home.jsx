@@ -1,13 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import { ArrowRight, Mouse } from "lucide-react";
 
 const Home = () => {
-  const handleDownloadCV = () => {
-    const link = document.createElement("a");
-    link.href = "/SwapnilCV.pdf";
-    link.download = "SwapnilCV.pdf";
-    link.click();
-  };
   const [currentTitle, setCurrentTitle] = useState(0);
   const titles = [
     "a Web Developer",
@@ -26,7 +21,7 @@ const Home = () => {
   return (
     <section
       id="home"
-      className="w-screen h-screen flex items-center justify-center p-8 bg-white dark:bg-gray-900"
+      className="w-screen h-screen flex flex-col items-center justify-center p-8 bg-white dark:bg-gray-900"
     >
       <div className="max-w-5xl text-center">
         <motion.h1
@@ -64,13 +59,24 @@ const Home = () => {
           <a
             href="/SwapnilCV.pdf"
             target="_blank"
-            // onClick={handleDownloadCV}
             className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors inline-block cursor-pointer"
           >
             Preview CV
           </a>
         </motion.div>
       </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.6 }}
+        className="fixed bottom-20 flex flex-col items-center"
+      >
+        <Mouse className="w-6 h-6 text-gray-600 dark:text-gray-300 animate-bounce" />
+        <p className="text-gray-600 dark:text-gray-300 mt-2 flex items-center gap-2 text-sm md:text-base">
+          Scroll to Explore <ArrowRight className="w-4 h-4" />
+        </p>
+      </motion.div>
     </section>
   );
 };
