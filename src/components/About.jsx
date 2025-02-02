@@ -4,7 +4,7 @@ const About = () => {
   return (
     <section
       id="about"
-      className="w-screen h-screen flex items-center justify-center p-8 bg-gray-50 dark:bg-gray-800 max-sm:h-[150dvh] max-sm:items-start"
+      className="w-screen h-screen flex items-center justify-center p-8 bg-gray-50 dark:bg-gray-800 max-sm:h-[160dvh] max-sm:items-start"
     >
       <div className="max-w-6xl w-full">
         <motion.h2
@@ -73,6 +73,7 @@ const About = () => {
               <div className="flex flex-wrap gap-2">
                 {[
                   "React",
+                  "Angular",
                   "Node.js",
                   "TypeScript",
                   "Tailwind CSS",

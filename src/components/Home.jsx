@@ -70,7 +70,7 @@ const Home = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.6 }}
-        className="fixed bottom-20 flex flex-col items-center"
+        className="fixed bottom-20 flex flex-col items-center max-sm:hidden"
       >
         <Mouse className="w-6 h-6 text-gray-600 dark:text-gray-300 animate-bounce" />
         <p className="text-gray-600 dark:text-gray-300 mt-2 flex items-center gap-2 text-sm md:text-base">
