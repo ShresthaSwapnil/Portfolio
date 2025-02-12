@@ -49,7 +49,7 @@ const Navbar = () => {
                 window.scrollTo(0, 0);
               }}
             >
-              Swapnil
+              Portfolio
             </h1>
           </div>
           <div className="md:hidden flex items-center space-x-4">
