@@ -5,12 +5,12 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const Projects = () => {
   const projects = [
     {
-      title: "Mobile App UI/UX Design Projects",
+      title: "KhetAI",
       description:
-        "Redesigned QFX Cinemas mobile app interface to enhance user experience and functionality using Figma Conceptualized and designed Huba Nepal clothing app, focusing on modern e-commerce design principlesCreated high-fidelity prototypes and user flows using Figma and Canva",
-      tags: ["Figma", "Canva"],
-      image: "/images/Projects/Figma.png",
-      url: "https://www.figma.com/files/project/273552780",
+        "Developed KhetAI, a smart farming assistant app, using Expo React Native to provide crop disease detection, real-time vegetable price, and farmer-to-buyer marketplace. Integrated TensorFlowLite for mobile AI analysis and beautiful-soup for scrapping realtime vegetable prices, enhancing agricultural efficiency and sustainability.",
+      tags: ["React Native", "TensorFlow Lite", "MySQL"],
+      image: "/images/Projects/KhetAI.png",
+      url: "https://github.com/subaasw/khetai",
     },
     {
       title: "Hackathon Website",
@@ -29,12 +29,12 @@ const Projects = () => {
       url: "https://github.com/ShresthaSwapnil/SimpleJARVIS",
     },
     {
-      title: "KhetAI",
+      title: "Mobile App UI/UX Design Projects",
       description:
-        "Developed KhetAI, a smart farming assistant app, using Expo React Native to provide crop disease detection, real-time vegetable price, and farmer-to-buyer marketplace. Integrated TensorFlowLite for mobile AI analysis and beautiful-soup for scrapping realtime vegetable prices, enhancing agricultural efficiency and sustainability.",
-      tags: ["Python"],
-      image: "/images/Projects/KhetAI.png",
-      url: "https://github.com/subaasw/khetai",
+        "Redesigned QFX Cinemas mobile app interface to enhance user experience and functionality using Figma Conceptualized and designed Huba Nepal clothing app, focusing on modern e-commerce design principlesCreated high-fidelity prototypes and user flows using Figma and Canva",
+      tags: ["Figma", "Canva"],
+      image: "/images/Projects/Figma.png",
+      url: "https://www.figma.com/files/project/273552780",
     },
     {
       title: "Agar.io Clone",
@@ -43,6 +43,14 @@ const Projects = () => {
       tags: ["Python", "PyGames"],
       image: "/images/Projects/Agario.jpg",
       url: "https://github.com/ShresthaSwapnil/AgarioClone",
+    },
+    {
+      title: "Simple Movie Recommendation System",
+      description:
+        "A Python-based recommendation system that suggests movies similar to a user's input.",
+      tags: ["Python", "Pandas", "sckit-learn"],
+      image: "/images/Projects/MovieRecommendation.png",
+      url: "https://github.com/ShresthaSwapnil/MovieRecommendation",
     },
   ];
 
@@ -67,12 +75,7 @@ const Projects = () => {
       className="w-screen h-screen flex items-center justify-center bg-white dark:bg-gray-900 max-sm:h-full max-sm:py-16"
     >
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center"
-        >
+        <motion.h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">
           Projects
         </motion.h2>
 
