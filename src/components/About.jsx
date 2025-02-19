@@ -7,12 +7,7 @@ const About = () => {
       className="w-screen h-screen flex items-center justify-center p-8 bg-gray-50 dark:bg-gray-800 max-sm:h-[160dvh] max-sm:items-start"
     >
       <div className="max-w-6xl w-full">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-4xl font-bold text-gray-900 dark:text-white mb-8 text-center"
-        >
+        <motion.h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-8 text-center">
           About Me
         </motion.h2>
         <motion.div className="grid md:grid-cols-2 gap-12 items-center">
@@ -62,7 +57,7 @@ const About = () => {
               <br />
               <br />
               <span className="font-bold text-green-600 dark:text-green-500">
-                Let’s collaborate and bring ideas to life!
+                Let's collaborate and bring ideas to life!
               </span>
             </p>
 
