@@ -56,6 +56,9 @@ const Navbar = () => {
             <button
               onClick={() => setDarkMode(!darkMode)}
               className="p-2 rounded-lg bg-gray-200 dark:bg-white"
+              aria-label={
+                darkMode ? "Switch to light mode" : "Switch to dark mode"
+              }
             >
               {darkMode ? (
                 <Sun className="w-5 h-5" />
@@ -73,7 +76,7 @@ const Navbar = () => {
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-4">
               {["home", "about", "projects", "contact"].map((section) => (
-                <a
+                <span
                   key={section}
                   // href={`#${section}`}
                   onClick={() => {
@@ -94,7 +97,7 @@ const Navbar = () => {
                   }`}
                 >
                   {section.charAt(0).toUpperCase() + section.slice(1)}
-                </a>
+                </span>
               ))}
               <button
                 onClick={handleDownloadCV}
