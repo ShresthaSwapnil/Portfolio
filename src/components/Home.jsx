@@ -16,7 +16,7 @@ const Home = () => {
       setCurrentTitle((prev) => (prev + 1) % titles.length);
     }, 2000);
     return () => clearInterval(interval);
-  }, []);
+  });
 
   return (
     <section
@@ -30,8 +30,8 @@ const Home = () => {
           transition={{ duration: 0.5 }}
           className="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6"
         >
-          Hi, I'm{" "}
-          <span className="text-green-600 dark:text-green-400">
+          Hi, I&apos;m{" "}
+          <span className="text-green-700 dark:text-green-500">
             Swapnil Shrestha
           </span>
         </motion.h1>
@@ -59,7 +59,7 @@ const Home = () => {
           <a
             href="/SwapnilCV.pdf"
             target="_blank"
-            className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors inline-block cursor-pointer"
+            className="px-6 py-3 bg-green-700 text-white rounded-lg hover:bg-green-800 transition-colors inline-block cursor-pointer"
           >
             Preview CV
           </a>

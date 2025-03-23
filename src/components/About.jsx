@@ -29,8 +29,8 @@ const About = () => {
           {/* Content Section */}
           <div className="order-1 md:order-2 space-y-6">
             <p className="text-gray-700 dark:text-gray-200 text-lg leading-relaxed">
-              Hi, I'm{" "}
-              <span className="font-bold text-green-600 dark:text-green-500">
+              Hi, I&apos;m{" "}
+              <span className="font-bold text-green-700 dark:text-green-500">
                 Swapnil Shrestha
               </span>
               , an
@@ -46,7 +46,7 @@ const About = () => {
               <br />
               <br />
               As the <span className="font-bold">President</span> of
-              <span className="font-bold text-green-600 dark:text-green-500">
+              <span className="font-bold text-green-700 dark:text-green-500">
                 {" "}
                 MVIC Tech Titan
               </span>
@@ -56,8 +56,8 @@ const About = () => {
               , blending creativity with strategy.
               <br />
               <br />
-              <span className="font-bold text-green-600 dark:text-green-500">
-                Let's collaborate and bring ideas to life!
+              <span className="font-bold text-green-700 dark:text-green-500">
+                Let&apos;s collaborate and bring ideas to life!
               </span>
             </p>
 

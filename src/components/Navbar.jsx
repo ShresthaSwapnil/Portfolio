@@ -68,7 +68,7 @@ const Navbar = () => {
             </button>
             <button
               onClick={handleDownloadCV}
-              className="p-2 rounded-lg bg-green-600 text-white hover:bg-green-700"
+              className="p-2 rounded-lg bg-green-700 text-white hover:bg-green-800"
             >
               Download CV
             </button>
@@ -92,7 +92,7 @@ const Navbar = () => {
                   }}
                   className={`cursor-pointer px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                     activeSection === section
-                      ? "text-green-600 dark:text-green-400"
+                      ? "text-green-700 dark:text-green-500"
                       : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                   }`}
                 >
@@ -101,7 +101,7 @@ const Navbar = () => {
               ))}
               <button
                 onClick={handleDownloadCV}
-                className="p-2 rounded-lg bg-green-600 text-white hover:bg-green-700"
+                className="p-2 rounded-lg bg-green-700 text-white hover:bg-green-800"
               >
                 Download CV
               </button>
