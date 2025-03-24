@@ -8,7 +8,7 @@ const Projects = () => {
       title: "KhetAI",
       description:
         "Developed KhetAI, a smart farming assistant app, using Expo React Native to provide crop disease detection, real-time vegetable price, and farmer-to-buyer marketplace. Integrated TensorFlowLite for mobile AI analysis and beautiful-soup for scrapping realtime vegetable prices, enhancing agricultural efficiency and sustainability.",
-      tags: ["React Native", "TensorFlow Lite", "MySQL"],
+      tags: ["React Native", "MySQL"],
       image: "/images/Projects/KhetAI.png",
       url: "https://github.com/subaasw/khetai",
     },
@@ -19,6 +19,14 @@ const Projects = () => {
       tags: ["React", "Tailwind CSS", "GSAP"],
       image: "/images/Projects/Hackathon.jpg",
       url: "https://github.com/ShresthaSwapnil/MVIC_Hackathon",
+    },
+    {
+      title: "Simple Movie Recommendation System",
+      description:
+        "A Python-based recommendation system that suggests movies similar to a user's input.",
+      tags: ["Python", "Pandas", "sckit-learn"],
+      image: "/images/Projects/MovieRecommendation.png",
+      url: "https://github.com/ShresthaSwapnil/MovieRecommendation",
     },
     {
       title: "Simple J.A.R.V.I.S",
@@ -44,14 +52,6 @@ const Projects = () => {
       image: "/images/Projects/Agario.jpg",
       url: "https://github.com/ShresthaSwapnil/AgarioClone",
     },
-    {
-      title: "Simple Movie Recommendation System",
-      description:
-        "A Python-based recommendation system that suggests movies similar to a user's input.",
-      tags: ["Python", "Pandas", "sckit-learn"],
-      image: "/images/Projects/MovieRecommendation.png",
-      url: "https://github.com/ShresthaSwapnil/MovieRecommendation",
-    },
   ];
 
   const itemsPerPage = 3;
@@ -75,9 +75,9 @@ const Projects = () => {
       className="w-screen h-screen flex items-center justify-center bg-white dark:bg-gray-900 max-sm:h-full max-sm:py-16"
     >
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <motion.h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">
+        <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">
           Projects
-        </motion.h2>
+        </h2>
 
         <div className="relative">
           <AnimatePresence mode="wait">
@@ -134,16 +134,16 @@ const Projects = () => {
 
                 <div className="flex gap-2">
                   {[...Array(totalPages)].map((_, i) => (
-                    <span
+                    <button
                       key={i}
                       onClick={() => setCurrentPage(i)}
-                      className={`w-2 h-2 rounded-full transition-colors ${
+                      className={`relative p-3 rounded-full transition-colors ${
                         i === currentPage
                           ? "bg-green-500 dark:bg-green-400 scale-125"
                           : "bg-gray-300 dark:bg-gray-600"
                       }`}
                       aria-label={`Go to page ${i + 1}`}
-                    />
+                    ></button>
                   ))}
                 </div>
 
