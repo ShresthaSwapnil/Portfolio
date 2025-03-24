@@ -108,6 +108,9 @@ const Navbar = () => {
               <button
                 onClick={() => setDarkMode(!darkMode)}
                 className="p-2 rounded-lg bg-gray-200 dark:bg-white hover:bg-gray-300 dark:hover:bg-gray-300"
+                aria-label={
+                  darkMode ? "Switch to light mode" : "Switch to dark mode"
+                }
               >
                 {darkMode ? (
                   <Sun className="w-5 h-5" />
