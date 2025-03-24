@@ -134,7 +134,7 @@ const Projects = () => {
 
                 <div className="flex gap-2">
                   {[...Array(totalPages)].map((_, i) => (
-                    <button
+                    <span
                       key={i}
                       onClick={() => setCurrentPage(i)}
                       className={`w-2 h-2 rounded-full transition-colors ${
