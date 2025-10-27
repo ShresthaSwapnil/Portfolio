@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Moon, Sun } from "lucide-react";
 
 const Navbar = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const yValue = window.innerHeight;
+  const observer = useRef(null);
 
   const handleDownloadCV = () => {
     const link = document.createElement("a");
@@ -22,82 +22,63 @@ const Navbar = () => {
   }, [darkMode]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = ["home", "about", "projects", "contact"];
-      const scrollPercent =
-        window.scrollY /
-        (document.documentElement.scrollHeight - window.innerHeight);
-      const sectionIndex = Math.min(
-        sections.length - 1,
-        Math.floor(scrollPercent * sections.length)
-      );
-      setActiveSection(sections[sectionIndex]);
-    };
+    // Create the observer
+    observer.current = new IntersectionObserver(
+      (entries) => {
+        const visibleSection = entries.find(
+          (entry) => entry.isIntersecting
+        )?.target;
+        if (visibleSection) {
+          setActiveSection(visibleSection.id);
+        }
+      },
+      { threshold: 0.5 } // Set section as active when 50% is visible
+    );
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    // Observe each section
+    const sections = document.querySelectorAll("section[id]");
+    sections.forEach((section) => {
+      observer.current.observe(section);
+    });
+
+    // Cleanup
+    return () => {
+      sections.forEach((section) => {
+        observer.current.unobserve(section);
+      });
+    };
   }, []);
 
+  const scrollToSection = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <nav className="fixed top-0 w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
+    <nav className="fixed top-0 w-full z-50 bg-white/40 dark:bg-gray-900/40 backdrop-blur-lg border-b border-black/20 dark:border-gray-700/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
             <h1
-              className="text-2xl font-bold text-gray-900 dark:text-white cursor-pointer"
-              onClick={() => {
-                window.scrollTo(0, 0);
-              }}
+              className="font-nepaliFont text-5xl font-bold text-gray-900 dark:text-white cursor-pointer"
+              onClick={() => scrollToSection("home")}
             >
-              Portfolio
+              :jlKgn
             </h1>
-          </div>
-          <div className="md:hidden flex items-center space-x-4">
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className="p-2 rounded-lg bg-gray-200 dark:bg-white"
-              aria-label={
-                darkMode ? "Switch to light mode" : "Switch to dark mode"
-              }
-            >
-              {darkMode ? (
-                <Sun className="w-5 h-5" />
-              ) : (
-                <Moon className="w-5 h-5" />
-              )}
-            </button>
-            <button
-              onClick={handleDownloadCV}
-              className="p-2 rounded-lg bg-green-700 text-white hover:bg-green-800"
-            >
-              Download CV
-            </button>
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-4">
               {["home", "about", "projects", "contact"].map((section) => (
-                <span
+                <a
                   key={section}
-                  // href={`#${section}`}
-                  onClick={() => {
-                    if (section === "home") {
-                      window.scrollTo(0, 0);
-                    } else if (section === "about") {
-                      window.scrollTo(0, yValue);
-                    } else if (section === "projects") {
-                      window.scrollTo(0, yValue * 2);
-                    } else if (section === "contact") {
-                      window.scrollTo(0, yValue * 3);
-                    }
-                  }}
+                  onClick={() => scrollToSection(section)}
                   className={`cursor-pointer px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                     activeSection === section
-                      ? "text-green-700 dark:text-green-500"
+                      ? "text-green-700 dark:text-green-500 font-bold"
                       : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                   }`}
                 >
                   {section.charAt(0).toUpperCase() + section.slice(1)}
-                </span>
+                </a>
               ))}
               <button
                 onClick={handleDownloadCV}
@@ -107,15 +88,15 @@ const Navbar = () => {
               </button>
               <button
                 onClick={() => setDarkMode(!darkMode)}
-                className="p-2 rounded-lg bg-gray-200 dark:bg-white hover:bg-gray-300 dark:hover:bg-gray-300"
+                className="p-2 rounded-lg bg-gray-200/50 dark:bg-white/10 hover:bg-gray-300 dark:hover:bg-white/20"
                 aria-label={
                   darkMode ? "Switch to light mode" : "Switch to dark mode"
                 }
               >
                 {darkMode ? (
-                  <Sun className="w-5 h-5" />
+                  <Sun className="w-5 h-5 text-yellow-400" />
                 ) : (
-                  <Moon className="w-5 h-5" />
+                  <Moon className="w-5 h-5 text-gray-800" />
                 )}
               </button>
             </div>

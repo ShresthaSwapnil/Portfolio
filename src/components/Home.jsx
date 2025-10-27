@@ -1,20 +1,19 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { ArrowRight, Mouse } from "lucide-react";
 
 const Home = () => {
   const [currentTitle, setCurrentTitle] = useState(0);
   const titles = [
-    "a Web Developer",
-    "a UI/UX Designer",
-    "a Problem Solver",
-    "an Innovation Enthusiast",
+    "Designing interfaces that think, not just look.",
+    "Building meaningful experiences through code and creativity.",
+    "Blending design, development, and intelligent automation.",
+    "Transforming ideas into interactive, AI-powered products.",
   ];
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTitle((prev) => (prev + 1) % titles.length);
-    }, 2000);
+    }, 3000);
     return () => clearInterval(interval);
   });
 
@@ -65,18 +64,6 @@ const Home = () => {
           </a>
         </motion.div>
       </div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.6 }}
-        className="fixed bottom-20 flex flex-col items-center max-sm:hidden"
-      >
-        <Mouse className="w-6 h-6 text-gray-600 dark:text-gray-300 animate-bounce" />
-        <p className="text-gray-600 dark:text-gray-300 mt-2 flex items-center gap-2 text-sm md:text-base">
-          Scroll to Explore <ArrowRight className="w-4 h-4" />
-        </p>
-      </motion.div>
     </section>
   );
 };
