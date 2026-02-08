@@ -1,43 +1,48 @@
-# Horizontal Scrolling Portfolio with Vertical Scroll 🚀
+# Swapnil Shrestha - Portfolio
 
-This is a modern portfolio website that uses **vertical scrolling** to create a smooth **horizontal scrolling** effect, built with **Vite + React**, **TailwindCSS**, and **Framer Motion**.
+A unique, minimalist portfolio website positioning Swapnil Shrestha as a **Mobile Developer & UX Designer**. This project explores the intersection of high-performance mobile engineering and user-centric design, infused with cultural identity.
 
----
+## 🎨 Design Philosophy
 
-## 🌟 Features
+- **Minimalist & Clean**: High contrast, expansive whitespace, and focus on typography.
+- **Cultural Identity**: Integration of Nepali script (Aakriti font) to create a distinct personal brand.
+- **UX Focused**: Asymmetrical layouts and smooth transitions that prioritize the content and user journey.
+- **Adaptive Theme**: Native support for both Light and Dark modes with a custom toggle.
 
-- **Smooth Horizontal Scrolling**: Navigate horizontally using vertical scroll gestures.
-- **Modern Animations**: Powered by Framer Motion for seamless and engaging transitions.
-- **Responsive Design**: Optimized for all devices and screen sizes.
-- **Customizable**: Easy to adapt for various portfolio styles.
+## 🚀 Tech Stack
 
----
+- **Framework**: [React.js](https://reactjs.org/) + [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Navigation**: [React Scroll](https://www.npmjs.com/package/react-scroll)
 
-## 🛠️ Technologies Used
+## 📁 Project Structure
 
-- **[Vite + React](https://vitejs.dev/)**: A fast build tool and framework for modern web development.
-- **[TailwindCSS](https://tailwindcss.com/)**: A utility-first CSS framework for rapid UI development.
-- **[Framer Motion](https://www.framer.com/motion/)**: A library for advanced animations and smooth motion.
-- **[Supabase](https://www.supabase.com)**: An open source Firebase alternative to store messages.
+- `src/components/`: Modular UI components (Hero, About, Projects, Experience, Contact).
+- `src/index.css`: Global styles including custom font-face and theme utilities.
+- `public/`: Static assets including the custom `Aakriti.ttf` font.
 
----
+## 🛠️ Getting Started
 
-## 📂 Project Structure
+1. **Install Dependencies**:
 
-```plaintext
-├── public/          # Static assets
-├── src/
-│   ├── components/  # Reusable components
-│   ├── App.jsx      # Main app file
-│   ├── main.jsx     # Entry point
-│   └── index.css    # TailwindCSS styles
-├── package.json     # Project dependencies
-└── vite.config.js   # Vite configuration
-```
+   ```bash
+   npm install
+   ```
 
-## 📞 Contact
+2. **Run Locally**:
 
-For questions or collaborations, reach out to Swapnil Shrestha:
+   ```bash
+   npm run dev
+   ```
 
-GitHub: ShresthaSwapnil
-Email: shresthaswapnil03@gmail.com
+3. **Build for Production**:
+   ```bash
+   npm run build
+   ```
+
+## 📬 Contact
+
+- **Email**: shresthaswapnil03@gmail.com
+- **LinkedIn**: [swapnil-shrestha](https://www.linkedin.com/in/swapnil-shrestha/)
+- **Portfolio**: [swapnil-shrestha.com.np](https://www.swapnil-shrestha.com.np/)

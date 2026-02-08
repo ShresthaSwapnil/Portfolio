@@ -1,108 +1,63 @@
 import { motion } from "framer-motion";
-import supabase from "../supabase-client";
 
 const Contact = () => {
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const formData = {
-      name: event.target.name.value,
-      email: event.target.email.value,
-      message: event.target.message.value,
-    };
-
-    console.log(formData);
-
-    try {
-      const { data, error } = await supabase
-        .from("messages")
-        .insert([formData]);
-
-      if (error) {
-        console.error("Error inserting data:", error.message);
-        alert("Failed to send message.");
-      } else {
-        alert("Message sent successfully!");
-        event.target.reset();
-      }
-    } catch (error) {
-      console.error("Unexpected error:", error.message);
-      alert("An unexpected error occurred.");
-    }
-  };
-
   return (
     <section
       id="contact"
-      className="w-screen h-screen flex items-center justify-center p-8 bg-gray-50 dark:bg-gray-800 max-sm:mt-12 "
+      className="py-32 bg-slate-50 dark:bg-slate-900/50 transition-colors duration-300 relative overflow-hidden"
     >
-      <div className="max-w-4xl w-full">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-4xl font-bold text-gray-900 dark:text-white mb-8"
+      <div className="container mx-auto px-6 text-center max-w-4xl relative z-10">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
         >
-          Get in Touch
-        </motion.h2>
-        <motion.form
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="space-y-6"
-          onSubmit={handleSubmit}
-        >
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-gray-700 dark:text-gray-300 mb-2"
-            >
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-              name="name"
-              required
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-gray-700 dark:text-gray-300 mb-2"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-              name="email"
-              required
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="message"
-              className="block text-gray-700 dark:text-gray-300 mb-2"
-            >
-              Message
-            </label>
-            <textarea
-              id="message"
-              rows={4}
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-              name="message"
-            ></textarea>
-          </div>
-          <button
-            type="submit"
-            className="w-full px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
+          <h2 className="font-serif text-5xl md:text-7xl text-slate-900 dark:text-slate-100 mb-8 tracking-tight">
+            Let's work together.
+          </h2>
+          <p className="text-xl text-slate-600 dark:text-slate-400 font-light mb-12 max-w-2xl mx-auto">
+            I am currently open to new opportunities. Whether you have a
+            question or just want to say hi, I'll try my best to get back to
+            you!
+          </p>
+
+          <a
+            href="mailto:shresthaswapnil03@gmail.com"
+            className="inline-block bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-10 py-4 rounded-full font-medium text-lg hover:bg-rose-600 dark:hover:bg-rose-500 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300"
           >
-            Send Message
-          </button>
-        </motion.form>
+            Say Hello
+          </a>
+
+          <div className="mt-20 flex justify-center gap-12 border-t border-slate-200 dark:border-slate-800 pt-12">
+            {[
+              {
+                name: "LinkedIn",
+                url: "https://www.linkedin.com/in/swapnil-shrestha/",
+              },
+              { name: "GitHub", url: "https://github.com/ShresthaSwapnil" },
+              {
+                name: "DataCamp",
+                url: "https://www.datacamp.com/profile/shresthaswapnil03",
+              },
+            ].map((social) => (
+              <a
+                key={social.name}
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-500 dark:text-slate-400 hover:text-rose-500 dark:hover:text-rose-400 font-medium uppercase tracking-widest text-sm transition-colors"
+              >
+                {social.name}
+              </a>
+            ))}
+          </div>
+
+          <div className="mt-12 text-slate-400 dark:text-slate-600 text-sm font-mono">
+            &copy; {new Date().getFullYear()} Swapnil Shrestha. Kathmandu,
+            Nepal.
+          </div>
+        </motion.div>
       </div>
     </section>
   );

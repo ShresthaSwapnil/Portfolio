@@ -1,46 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Custom scrollbar styling */
-::-webkit-scrollbar {
-  display: none;
-}
-
-/* Global styles */
-html {
-  scroll-behavior: smooth;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
 
 @font-face {
   font-family: 'NepaliFont';
   src: url('/Aakriti.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    @apply antialiased selection:bg-rose-200 selection:text-rose-900;
+  }
+  
+  body {
+    @apply font-sans bg-[#FDFBF7] text-slate-800 transition-colors duration-300;
+  }
+
+  /* Dark mode overrides */
+  .dark body {
+    @apply bg-slate-900 text-slate-200;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
 }
 
 @layer utilities {
-  .animation-delay-2000 {
-    animation-delay: 2s;
+  .font-nepali {
+    font-family: 'NepaliFont', sans-serif;
   }
-  .animation-delay-4000 {
-    animation-delay: 4s;
+
+  /* Minimalist utilities */
+  .section-padding {
+    @apply py-24 md:py-32;
+  }
+
+  .text-highlight {
+    @apply relative inline-block after:content-[''] after:absolute after:bottom-1 after:left-0 after:w-full after:h-[0.3em] after:bg-rose-200/50 after:-z-10 dark:after:bg-rose-500/20 px-1;
   }
 }
 
-@keyframes blob {
-  0% {
-    transform: translate(0px, 0px) scale(1);
-  }
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-  }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-  100% {
-    transform: translate(0px, 0px) scale(1);
-  }
+/* Custom scrollbar - Minimal */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full hover:bg-slate-400 transition-colors dark:bg-slate-700 dark:hover:bg-slate-600;
 }
