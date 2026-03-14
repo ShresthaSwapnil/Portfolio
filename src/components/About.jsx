@@ -71,29 +71,61 @@ const About = () => {
             </div>
           </motion.div>
 
-          {/* Right: Visual Element */}
+          {/* Right: Stats & Highlights */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="relative h-full min-h-[400px] flex items-center justify-center bg-white dark:bg-slate-800 rounded-2xl shadow-xl overflow-hidden p-12"
+            className="grid grid-cols-2 gap-4"
           >
-            {/* Decorative circles */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-rose-100 dark:bg-rose-900/20 rounded-full translate-x-1/2 -translate-y-1/2"></div>
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-slate-100 dark:bg-slate-700 rounded-full -translate-x-1/2 translate-y-1/2"></div>
-
-            <div className="relative z-10 text-center">
-              <span className="font-nepali text-9xl text-slate-900 dark:text-white opacity-10 select-none absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                कला
-              </span>
-              <div className="relative z-20">
-                <h4 className="font-serif text-2xl text-slate-800 dark:text-slate-200 mb-2">
-                  Design + Code
-                </h4>
-                <p className="text-rose-500 font-mono text-sm">Since 2024</p>
-              </div>
-            </div>
+            {[
+              {
+                value: "3+",
+                label: "Years of Craft",
+                sub: "Designing & Engineering",
+              },
+              {
+                value: "5+",
+                label: "Apps Developed",
+                sub: "Flutter & React Native",
+              },
+              {
+                value: "20+",
+                label: "Learning Streaks",
+                sub: "Certifications & Courses",
+              },
+              {
+                value: "100+",
+                label: "Late Night Solves",
+                sub: "Coffee to Logic ratio",
+              },
+              { value: "∞", label: "Curiosity", sub: "Always learning" },
+              {
+                value: "👀",
+                label: "Next Project",
+                sub: "Loading...",
+              },
+            ].map((stat, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08, duration: 0.5 }}
+                className="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-100 dark:border-slate-700 hover:border-rose-300 dark:hover:border-rose-700 transition-colors group"
+              >
+                <p className="text-3xl font-bold text-slate-900 dark:text-slate-100 group-hover:text-rose-500 transition-colors">
+                  {stat.value}
+                </p>
+                <p className="text-sm font-semibold text-slate-700 dark:text-slate-200 mt-1">
+                  {stat.label}
+                </p>
+                <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">
+                  {stat.sub}
+                </p>
+              </motion.div>
+            ))}
           </motion.div>
         </div>
       </div>
