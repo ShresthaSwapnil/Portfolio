@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -12,23 +12,85 @@
   font-display: swap;
 }
 
+/* ===== Design Tokens as CSS Custom Properties ===== */
+:root {
+  /* Colors — Light (default) */
+  --color-bg: #F5F0EB;
+  --color-bg-alt: #EDE8E1;
+  --color-surface: #FFFFFF;
+  --color-text: #0A0A0A;
+  --color-text-secondary: #6B6560;
+  --color-text-muted: #A8A29E;
+  --color-accent: #C8102E;
+  --color-accent-soft: rgba(200, 16, 46, 0.08);
+  --color-border: rgba(10, 10, 10, 0.08);
+  --color-border-hover: rgba(10, 10, 10, 0.15);
+
+  /* Spacing rhythm */
+  --section-padding: clamp(5rem, 10vw, 9rem);
+
+  /* Animation timing */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-smooth: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 0.3s;
+  --duration-medium: 0.6s;
+  --duration-slow: 1.2s;
+
+  /* Typography scale */
+  --text-display: clamp(3rem, 8vw, 7.5rem);
+  --text-headline: clamp(2rem, 5vw, 4rem);
+  --text-title: clamp(1.5rem, 3vw, 2.5rem);
+  --text-body: clamp(1rem, 1.2vw, 1.125rem);
+  --text-small: clamp(0.75rem, 1vw, 0.875rem);
+  --text-micro: clamp(0.625rem, 0.8vw, 0.75rem);
+}
+
+/* Dark mode tokens */
+.dark {
+  --color-bg: #0A0A0A;
+  --color-bg-alt: #141414;
+  --color-surface: #1A1A1A;
+  --color-text: #F5F0EB;
+  --color-text-secondary: #A8A29E;
+  --color-text-muted: #6B6560;
+  --color-accent: #E63946;
+  --color-accent-soft: rgba(230, 57, 70, 0.12);
+  --color-border: rgba(245, 240, 235, 0.08);
+  --color-border-hover: rgba(245, 240, 235, 0.15);
+}
+
 @layer base {
-  html {
-    scroll-behavior: smooth;
-    @apply antialiased selection:bg-rose-200 selection:text-rose-900;
-  }
-  
-  body {
-    @apply font-sans bg-[#FDFBF7] text-slate-800 transition-colors duration-300;
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
 
-  /* Dark mode overrides */
-  .dark body {
-    @apply bg-slate-900 text-slate-200;
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    transition: background-color 0.5s var(--ease-in-out-smooth),
+                color 0.5s var(--ease-in-out-smooth);
+    overflow-x: hidden;
+    line-height: 1.6;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif;
+    font-family: 'Instrument Serif', serif;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
   }
 }
 
@@ -37,25 +99,135 @@
     font-family: 'NepaliFont', sans-serif;
   }
 
-  /* Minimalist utilities */
-  .section-padding {
-    @apply py-24 md:py-32;
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
   }
 
-  .text-highlight {
-    @apply relative inline-block after:content-[''] after:absolute after:bottom-1 after:left-0 after:w-full after:h-[0.3em] after:bg-rose-200/50 after:-z-10 dark:after:bg-rose-500/20 px-1;
+  .text-display {
+    font-size: var(--text-display);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+  }
+
+  .text-headline {
+    font-size: var(--text-headline);
+    line-height: 1.1;
+  }
+
+  .text-title {
+    font-size: var(--text-title);
+  }
+
+  .section-padding {
+    padding-top: var(--section-padding);
+    padding-bottom: var(--section-padding);
+  }
+
+  /* Noise texture overlay */
+  .noise-overlay::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+    mix-blend-mode: overlay;
+  }
+
+  /* Reveal animation utilities */
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity var(--duration-slow) var(--ease-out-expo),
+                transform var(--duration-slow) var(--ease-out-expo);
+  }
+
+  .reveal-up.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stagger delays */
+  .stagger-1 { transition-delay: 0.05s; }
+  .stagger-2 { transition-delay: 0.1s; }
+  .stagger-3 { transition-delay: 0.15s; }
+  .stagger-4 { transition-delay: 0.2s; }
+  .stagger-5 { transition-delay: 0.25s; }
+  .stagger-6 { transition-delay: 0.3s; }
+
+  /* Magnetic button base */
+  .magnetic-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s var(--ease-out-expo);
+  }
+
+  /* Horizontal rule with label */
+  .labeled-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .labeled-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--color-border);
+  }
+
+  /* Image reveal mask */
+  .img-reveal {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1.2s var(--ease-out-expo);
+  }
+
+  .img-reveal.revealed {
+    clip-path: inset(0 0% 0 0);
   }
 }
 
-/* Custom scrollbar - Minimal */
+/* ===== Custom Scrollbar ===== */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-transparent;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-300 rounded-full hover:bg-slate-400 transition-colors dark:bg-slate-700 dark:hover:bg-slate-600;
+  background: var(--color-text-muted);
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-secondary);
+}
+
+/* ===== Lenis smooth scroll ===== */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }

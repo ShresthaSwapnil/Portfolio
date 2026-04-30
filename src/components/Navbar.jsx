@@ -1,38 +1,49 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-scroll";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
+
+  // Default to light mode (removed system preference check)
+  useEffect(() => {
+    // We intentionally start in light mode
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      const currentScrollY = window.scrollY;
+      setScrolled(currentScrollY > 50);
+      // Hide navbar on scroll down, show on scroll up
+      if (currentScrollY > lastScrollY.current && currentScrollY > 200) {
+        setHidden(true);
+      } else {
+        setHidden(false);
+      }
+      lastScrollY.current = currentScrollY;
     };
 
-    // Check system preference on mount
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setIsDark(true);
-      document.documentElement.classList.add("dark");
-    }
-
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const toggleTheme = () => {
     setIsDark(!isDark);
-    if (!isDark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
+    document.documentElement.classList.toggle("dark");
+  };
+
+  const scrollToSection = (id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+      setIsOpen(false);
     }
   };
 
   const navLinks = [
-    { name: "Home", to: "home" },
     { name: "About", to: "about" },
     { name: "Experience", to: "experience" },
     { name: "Work", to: "projects" },
@@ -40,201 +51,181 @@ const Navbar = () => {
   ];
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm py-4"
-          : "bg-transparent py-6"
-      }`}
-    >
-      <div className="container mx-auto px-6 flex items-center justify-between">
-        {/* Logo - Nepali Script */}
-        <div className="cursor-pointer z-50 relative group">
-          <Link to="home" smooth={true} duration={500}>
-            <span className="font-nepali text-3xl md:text-4xl text-slate-800 dark:text-slate-100 group-hover:text-rose-600 transition-colors">
+    <>
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: hidden ? -100 : 0 }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled
+            ? "py-3 backdrop-blur-xl"
+            : "py-5 md:py-6"
+        }`}
+        style={{
+          backgroundColor: scrolled
+            ? "color-mix(in srgb, var(--color-bg) 85%, transparent)"
+            : "transparent",
+          borderBottom: scrolled ? "1px solid var(--color-border)" : "1px solid transparent",
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between">
+          {/* Logo */}
+          <button
+            onClick={() => scrollToSection("hero")}
+            className="z-50 relative group"
+          >
+            <span
+              className="font-nepali text-3xl md:text-4xl transition-colors duration-300 group-hover:text-accent"
+              style={{ color: "var(--color-text)" }}
+            >
               :jlKgn
             </span>
-          </Link>
-        </div>
+          </button>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              to={link.to}
-              smooth={true}
-              duration={500}
-              className="cursor-pointer text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-400 transition-colors uppercase tracking-widest"
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center gap-10">
+            {navLinks.map((link, i) => (
+              <button
+                key={link.name}
+                onClick={() => scrollToSection(link.to)}
+                className="relative text-[13px] font-medium uppercase tracking-[0.15em] transition-colors duration-300 hover:text-accent group"
+                style={{ color: "var(--color-text-secondary)" }}
+              >
+                <span className="font-mono text-[10px] text-accent mr-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                  0{i + 1}
+                </span>
+                {link.name}
+              </button>
+            ))}
+
+            {/* Resume */}
+            <a
+              href="/SwapnilCV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-2 rounded-full text-[13px] font-medium uppercase tracking-[0.1em] transition-all duration-300 hover:bg-accent hover:text-white hover:border-accent"
+              style={{
+                color: "var(--color-text)",
+                border: "1px solid var(--color-border-hover)",
+              }}
             >
-              {link.name}
-            </Link>
-          ))}
+              Résumé
+            </a>
 
-          {/* Resume Button */}
-          <a
-            href="/SwapnilCV.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-5 py-2 rounded-full border border-slate-300 dark:border-slate-600 text-sm font-medium text-slate-700 dark:text-slate-200 hover:border-rose-500 hover:text-rose-600 dark:hover:text-rose-400 transition-all"
-          >
-            Resume
-          </a>
-
-          {/* Theme Toggle */}
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-300"
-            aria-label="Toggle Theme"
-          >
-            {isDark ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="12" cy="12" r="5" />
-                <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
-              </svg>
-            ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-              </svg>
-            )}
-          </button>
-        </div>
-
-        {/* Mobile Toggle & Menu Button */}
-        <div className="flex items-center gap-4 md:hidden">
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-300"
-          >
-            {isDark ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="12" cy="12" r="5" />
-                <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
-              </svg>
-            ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-              </svg>
-            )}
-          </button>
-
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="p-2 text-slate-800 dark:text-slate-100 focus:outline-none"
-          >
-            {isOpen ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M18 6 6 18" />
-                <path d="m6 6 18 18" />
-              </svg>
-            ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="3" x2="21" y1="6" y2="6" />
-                <line x1="3" x2="21" y1="12" y2="12" />
-                <line x1="3" x2="21" y1="18" y2="18" />
-              </svg>
-            )}
-          </button>
-        </div>
-
-        {/* Mobile Dropdown */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="absolute top-full left-0 right-0 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 shadow-lg md:hidden overflow-hidden"
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 hover:bg-accent-soft"
+              style={{ color: "var(--color-text-secondary)" }}
+              aria-label="Toggle theme"
             >
-              <div className="flex flex-col p-6 gap-4">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.name}
-                    to={link.to}
-                    smooth={true}
-                    duration={500}
-                    onClick={() => setIsOpen(false)}
-                    className="text-lg font-serif italic text-slate-600 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-400 py-2 border-b border-slate-50 dark:border-slate-800"
-                  >
-                    {link.name}
-                  </Link>
-                ))}
+              <motion.div
+                key={isDark ? "sun" : "moon"}
+                initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
+                animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
+                transition={{ duration: 0.3 }}
+              >
+                {isDark ? (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="5" />
+                    <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
+                  </svg>
+                ) : (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                  </svg>
+                )}
+              </motion.div>
+            </button>
+          </div>
 
-                {/* Mobile Resume Link */}
-                <a
-                  href="/SwapnilCV.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-lg font-serif italic text-rose-600 dark:text-rose-400 py-2"
-                >
-                  View Resume
-                </a>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </nav>
+          {/* Mobile Controls */}
+          <div className="flex items-center gap-3 md:hidden">
+            <button
+              onClick={toggleTheme}
+              className="w-9 h-9 rounded-full flex items-center justify-center"
+              style={{ color: "var(--color-text-secondary)" }}
+            >
+              {isDark ? (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="5" />
+                  <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
+                </svg>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+              )}
+            </button>
+
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="w-9 h-9 flex flex-col items-center justify-center gap-[5px] z-50"
+              style={{ color: "var(--color-text)" }}
+            >
+              <motion.span
+                animate={isOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
+                className="w-6 h-[1.5px] block origin-center"
+                style={{ backgroundColor: "var(--color-text)" }}
+              />
+              <motion.span
+                animate={isOpen ? { opacity: 0, x: -10 } : { opacity: 1, x: 0 }}
+                className="w-6 h-[1.5px] block"
+                style={{ backgroundColor: "var(--color-text)" }}
+              />
+              <motion.span
+                animate={isOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
+                className="w-6 h-[1.5px] block origin-center"
+                style={{ backgroundColor: "var(--color-text)" }}
+              />
+            </button>
+          </div>
+        </div>
+      </motion.nav>
+
+      {/* Full-screen mobile menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ clipPath: "circle(0% at calc(100% - 40px) 40px)" }}
+            animate={{ clipPath: "circle(150% at calc(100% - 40px) 40px)" }}
+            exit={{ clipPath: "circle(0% at calc(100% - 40px) 40px)" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8"
+            style={{ backgroundColor: "var(--color-bg)" }}
+          >
+            {navLinks.map((link, i) => (
+              <motion.button
+                key={link.name}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ delay: i * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                onClick={() => scrollToSection(link.to)}
+                className="text-4xl font-serif italic transition-colors hover:text-accent"
+                style={{ color: "var(--color-text)" }}
+              >
+                {link.name}
+              </motion.button>
+            ))}
+
+            <motion.a
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.35, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              href="/SwapnilCV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-lg font-mono uppercase tracking-widest mt-4"
+              style={{ color: "var(--color-accent)" }}
+            >
+              Résumé ↗
+            </motion.a>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 

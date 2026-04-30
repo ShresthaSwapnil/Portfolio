@@ -1,131 +1,264 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+
+const skills = [
+  { name: "Flutter", category: "Mobile" },
+  { name: "React Native", category: "Mobile" },
+  { name: "React / Next.js", category: "Web" },
+  { name: "Node.js", category: "Backend" },
+  { name: "FastAPI", category: "Backend" },
+  { name: "Figma", category: "Design" },
+  { name: "Canva", category: "Design" },
+  { name: "Claude", category: "AI" },
+  { name: "Gemini", category: "AI" },
+  { name: "n8n", category: "Automation" },
+  { name: "Claude Code", category: "Automation" },
+];
 
 const About = () => {
+  const sectionRef = useRef(null);
+  const imageRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const imageY = useTransform(scrollYProgress, [0, 1], [60, -60]);
+  const textY = useTransform(scrollYProgress, [0, 1], [30, -30]);
+
   return (
     <section
       id="about"
-      className="py-24 bg-slate-50 dark:bg-slate-900/50 transition-colors duration-300"
+      ref={sectionRef}
+      className="section-padding relative overflow-hidden"
+      style={{ backgroundColor: "var(--color-bg-alt)" }}
     >
-      <div className="container mx-auto px-6">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Left: Text Content */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+      <div className="max-w-7xl mx-auto px-6 md:px-10">
+        {/* Section label */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="labeled-divider mb-16 md:mb-24"
+        >
+          <span
+            className="font-mono text-xs uppercase tracking-[0.3em] whitespace-nowrap"
+            style={{ color: "var(--color-text-muted)" }}
           >
-            <h2 className="text-sm font-bold uppercase tracking-widest text-rose-500 mb-4">
-              The Journey
-            </h2>
-            <h3 className="text-3xl md:text-4xl font-serif text-slate-900 dark:text-slate-100 mb-8 leading-tight">
-              Crafting digital narratives through code and design.
-            </h3>
+            01 — About
+          </span>
+        </motion.div>
 
-            <div className="prose prose-lg text-slate-600 dark:text-slate-300 font-light leading-relaxed">
-              <p className="mb-6">
-                I am a{" "}
-                <span className="font-semibold text-slate-800 dark:text-slate-200">
-                  Mobile Developer
-                </span>{" "}
-                who believes that great code is invisible, it just works. My
-                experience with{" "}
-                <span className="underline decoration-rose-300 decoration-2 underline-offset-4">
-                  React Native
-                </span>{" "}
-                and{" "}
-                <span className="underline decoration-rose-300 decoration-2 underline-offset-4">
-                  Flutter
-                </span>{" "}
-                allows me to build fluid, high-performance applications that
-                feel native on any device.
-              </p>
-              <p>
-                But code is only half the story. As a{" "}
-                <span className="font-semibold text-slate-800 dark:text-slate-200">
-                  UX Designer
-                </span>
-                , I obsess over the "why" and "how" of user interaction. I use
-                standard tools like <span className="italic">Figma</span> to
-                prototype, but my real tool is empathy, understanding the user's
-                need before writing a single line of logic.
-              </p>
-            </div>
+        {/* Main grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          {/* Photo column */}
+          <motion.div style={{ y: imageY }} className="lg:col-span-5 relative">
+            <div className="relative">
+              {/* Photo frame */}
+              <motion.div
+                initial={{ clipPath: "inset(100% 0 0 0)" }}
+                whileInView={{ clipPath: "inset(0% 0 0 0)" }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                className="relative aspect-[3/4] overflow-hidden rounded-sm"
+              >
+                <img
+                  src="/images/swapnil-suit.jpg"
+                  alt="Swapnil Shrestha"
+                  className="w-full h-full object-cover object-top"
+                  loading="lazy"
+                />
+                {/* Subtle overlay gradient */}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(to top, var(--color-bg-alt) 0%, transparent 30%)",
+                  }}
+                />
+              </motion.div>
 
-            <div className="mt-12 flex flex-wrap gap-4">
-              {[
-                "Flutter",
-                "React Native",
-                "FastAPI",
-                "React",
-                "Figma",
-                "Node.js",
-              ].map((skill) => (
-                <span
-                  key={skill}
-                  className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full text-sm text-slate-600 dark:text-slate-300 shadow-sm"
+              {/* Floating accent card */}
+              <motion.div
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{
+                  delay: 0.5,
+                  duration: 0.8,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="absolute -bottom-6 -right-4 md:-right-8 px-5 py-4 rounded-sm backdrop-blur-xl"
+                style={{
+                  backgroundColor: "var(--color-surface)",
+                  border: "1px solid var(--color-border)",
+                }}
+              >
+                <p
+                  className="font-mono text-[11px] uppercase tracking-[0.2em]"
+                  style={{ color: "var(--color-text-muted)" }}
                 >
-                  {skill}
-                </span>
-              ))}
+                  Based in
+                </p>
+                <p
+                  className="font-serif italic text-lg mt-0.5"
+                  style={{ color: "var(--color-text)" }}
+                >
+                  Kathmandu, Nepal
+                </p>
+              </motion.div>
             </div>
           </motion.div>
 
-          {/* Right: Stats & Highlights */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="grid grid-cols-2 gap-4"
-          >
-            {[
-              {
-                value: "3+",
-                label: "Years of Craft",
-                sub: "Designing & Engineering",
-              },
-              {
-                value: "5+",
-                label: "Apps Developed",
-                sub: "Flutter & React Native",
-              },
-              {
-                value: "20+",
-                label: "Learning Streaks",
-                sub: "Certifications & Courses",
-              },
-              {
-                value: "100+",
-                label: "Late Night Solves",
-                sub: "Coffee to Logic ratio",
-              },
-              { value: "∞", label: "Curiosity", sub: "Always learning" },
-              {
-                value: "👀",
-                label: "Next Project",
-                sub: "Loading...",
-              },
-            ].map((stat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.5 }}
-                className="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-100 dark:border-slate-700 hover:border-rose-300 dark:hover:border-rose-700 transition-colors group"
+          {/* Text column */}
+          <motion.div style={{ y: textY }} className="lg:col-span-7 lg:pl-4">
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="text-headline font-serif mb-8 md:mb-10"
+              style={{ color: "var(--color-text)" }}
+            >
+              I engineer experiences across{" "}
+              <span className="italic">screens,</span>{" "}
+              <span style={{ color: "var(--color-accent)" }}>pixels</span> &
+              prompts.
+            </motion.h2>
+
+            <div className="space-y-6">
+              {[
+                <>
+                  I'm a{" "}
+                  <strong style={{ color: "var(--color-text)" }}>
+                    Full-Stack Developer
+                  </strong>{" "}
+                  who builds across the entire stack - from pixel-perfect mobile
+                  apps in{" "}
+                  <span className="underline decoration-accent/30 decoration-2 underline-offset-4">
+                    Flutter
+                  </span>{" "}
+                  to robust web applications and backend systems. I believe
+                  great software is invisible, it just works.
+                </>,
+                <>
+                  But code is only half the equation. As a{" "}
+                  <strong style={{ color: "var(--color-text)" }}>
+                    Content Designer
+                  </strong>
+                  , I've crafted{" "}
+                  <span style={{ color: "var(--color-accent)" }}>500+</span>{" "}
+                  designs for international brands - shaping how products
+                  communicate visually across social platforms and digital
+                  touchpoints.
+                </>,
+                <>
+                  I integrate{" "}
+                  <strong style={{ color: "var(--color-text)" }}>
+                    AI into everything I build
+                  </strong>{" "}
+                  - from intelligent features powered by Gemini to automated
+                  workflows with n8n and Claude Code. The future isn't coming;
+                  I'm building it.
+                </>,
+              ].map((paragraph, i) => (
+                <motion.p
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{
+                    duration: 0.7,
+                    delay: i * 0.1,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  className="text-base md:text-[17px] font-light leading-[1.8]"
+                  style={{ color: "var(--color-text-secondary)" }}
+                >
+                  {paragraph}
+                </motion.p>
+              ))}
+            </div>
+
+            {/* Skills */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+              className="mt-12 md:mt-16"
+            >
+              <p
+                className="font-mono text-[11px] uppercase tracking-[0.3em] mb-5"
+                style={{ color: "var(--color-text-muted)" }}
               >
-                <p className="text-3xl font-bold text-slate-900 dark:text-slate-100 group-hover:text-rose-500 transition-colors">
-                  {stat.value}
-                </p>
-                <p className="text-sm font-semibold text-slate-700 dark:text-slate-200 mt-1">
-                  {stat.label}
-                </p>
-                <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">
-                  {stat.sub}
-                </p>
-              </motion.div>
-            ))}
+                Tools & Technologies
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {skills.map((skill, i) => (
+                  <motion.span
+                    key={skill.name}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{
+                      delay: i * 0.04,
+                      duration: 0.4,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                    className="px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-300 cursor-default hover:scale-105"
+                    style={{
+                      backgroundColor: "var(--color-surface)",
+                      color: "var(--color-text-secondary)",
+                      border: "1px solid var(--color-border)",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = "var(--color-accent)";
+                      e.currentTarget.style.color = "var(--color-accent)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = "var(--color-border)";
+                      e.currentTarget.style.color =
+                        "var(--color-text-secondary)";
+                    }}
+                  >
+                    {skill.name}
+                  </motion.span>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Quick stats — meaningful ones only */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              className="mt-12 grid grid-cols-3 gap-8"
+            >
+              {[
+                { value: "3+", label: "Years Building" },
+                { value: "500+", label: "Designs Crafted" },
+                { value: "7+", label: "Products Shipped" },
+              ].map((stat, i) => (
+                <div key={i}>
+                  <p
+                    className="text-3xl md:text-4xl font-serif"
+                    style={{ color: "var(--color-text)" }}
+                  >
+                    {stat.value}
+                  </p>
+                  <p
+                    className="font-mono text-[10px] uppercase tracking-[0.2em] mt-1"
+                    style={{ color: "var(--color-text-muted)" }}
+                  >
+                    {stat.label}
+                  </p>
+                </div>
+              ))}
+            </motion.div>
           </motion.div>
         </div>
       </div>
