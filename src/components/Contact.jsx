@@ -1,253 +1,159 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { profile, socials } from "../data/content";
+import { scrollToId, useCopy, useKathmanduClock } from "../lib/interaction";
+import { ChapterLabel, Magnetic, RollText } from "./ui";
+
+const ease = [0.16, 1, 0.3, 1];
 
 const Contact = () => {
-  const sectionRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end end"],
-  });
-
-  const headingY = useTransform(scrollYProgress, [0, 1], [80, 0]);
-  const headingOpacity = useTransform(scrollYProgress, [0, 0.4], [0, 1]);
-
-  const socials = [
-    {
-      name: "LinkedIn",
-      url: "https://www.linkedin.com/in/swapnil-shrestha-b5792925b/",
-    },
-    {
-      name: "GitHub",
-      url: "https://github.com/ShresthaSwapnil",
-    },
-    {
-      name: "Instagram",
-      url: "https://www.instagram.com/shresthaswapnil/",
-    },
-    {
-      name: "DataCamp",
-      url: "https://www.datacamp.com/profile/shresthaswapnil03",
-    },
-  ];
+  const ref = useRef(null);
+  const { copied, copy } = useCopy();
+  const { time, awake } = useKathmanduClock();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end end"] });
+  const thanksY = useTransform(scrollYProgress, [0.4, 1], ["40%", "0%"]);
+  const thanksOpacity = useTransform(scrollYProgress, [0.5, 1], [0, 1]);
 
   return (
     <section
       id="contact"
-      ref={sectionRef}
-      className="relative overflow-hidden"
-      style={{ backgroundColor: "var(--color-bg)" }}
+      ref={ref}
+      data-chapter="contact"
+      className="relative overflow-hidden bg-primary text-bg"
     >
-      {/* Main contact area */}
       <div className="section-padding">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
-          {/* Section label */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="labeled-divider mb-16 md:mb-24"
-          >
-            <span
-              className="font-mono text-xs uppercase tracking-[0.3em] whitespace-nowrap"
-              style={{ color: "var(--color-text-muted)" }}
-            >
-              04 — Contact
-            </span>
-          </motion.div>
-
-          {/* Big CTA heading */}
-          <div className="max-w-5xl">
-            <motion.h2
-              style={{ y: headingY, opacity: headingOpacity }}
-              className="font-serif text-display leading-[0.95] mb-8"
-            >
-              <span style={{ color: "var(--color-text)" }}>Let's build</span>
-              <br />
-              <span className="italic" style={{ color: "var(--color-text)" }}>
-                something{" "}
-              </span>
-              <span style={{ color: "var(--color-accent)" }}>together.</span>
-            </motion.h2>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.8,
-                delay: 0.2,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="text-base md:text-lg font-light leading-relaxed max-w-xl mb-12"
-              style={{ color: "var(--color-text-secondary)" }}
-            >
-              Currently open to new opportunities — whether it's a full-stack
-              project, a mobile app, or a creative collaboration. Let's talk.
-            </motion.p>
-
-            {/* Email CTA */}
-            <motion.a
-              href="mailto:shresthaswapnil03@gmail.com"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.8,
-                delay: 0.3,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="group inline-flex items-center gap-4 mb-20"
-            >
-              <span
-                className="text-xl md:text-2xl font-serif italic transition-colors duration-300 group-hover:text-accent"
-                style={{ color: "var(--color-text)" }}
-              >
-                shresthaswapnil03@gmail.com
-              </span>
-              <span
-                className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 group-hover:bg-accent group-hover:text-white group-hover:scale-110"
-                style={{
-                  border: "1px solid var(--color-border)",
-                  color: "var(--color-text-muted)",
-                }}
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                >
-                  <path d="M7 17L17 7M17 7H7M17 7v10" />
-                </svg>
-              </span>
-            </motion.a>
+          <div className="opacity-70 [&_.labeled-divider::after]:bg-current [&_.labeled-divider::after]:opacity-20">
+            <ChapterLabel index="04" label="Epilogue" className="mb-16 md:mb-24" />
           </div>
 
-          {/* Social links */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="pt-12"
-            style={{ borderTop: "1px solid var(--color-border)" }}
-          >
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
-              <div className="flex flex-wrap gap-8 md:gap-12">
-                {socials.map((social, i) => (
-                  <motion.a
-                    key={social.name}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{
-                      delay: 0.5 + i * 0.08,
-                      duration: 0.5,
-                      ease: [0.16, 1, 0.3, 1],
-                    }}
-                    className="group flex items-center gap-2 transition-colors duration-300 hover:text-accent"
-                    style={{ color: "var(--color-text-secondary)" }}
-                  >
-                    <span className="text-sm font-medium uppercase tracking-[0.15em]">
-                      {social.name}
-                    </span>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      className="opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-1 group-hover:translate-x-0"
-                    >
-                      <path d="M7 17L17 7M17 7H7M17 7v10" />
-                    </svg>
-                  </motion.a>
-                ))}
-              </div>
-
-              {/* Availability badge */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.8, duration: 0.5 }}
-                className="flex items-center gap-2"
-              >
-                <span
-                  className="w-2 h-2 rounded-full animate-pulse"
-                  style={{ backgroundColor: "#22C55E" }}
-                />
-                <span
-                  className="font-mono text-[11px] uppercase tracking-[0.15em]"
-                  style={{ color: "var(--color-text-muted)" }}
+          <h2 className="text-display">
+            {["The next chapter", "could be ours."].map((line, i) => (
+              <span key={line} className="block overflow-hidden pb-[0.06em]">
+                <motion.span
+                  className="block"
+                  initial={{ y: "110%" }}
+                  whileInView={{ y: "0%" }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 1.1, delay: i * 0.1, ease }}
                 >
-                  Available for work
+                  {i === 1 ? (
+                    <>
+                      <em>could be</em> <span className="text-accent">ours.</span>
+                    </>
+                  ) : (
+                    line
+                  )}
+                </motion.span>
+              </span>
+            ))}
+          </h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2, ease }}
+            className="mt-8 max-w-xl text-base md:text-lg font-light leading-relaxed opacity-70"
+          >
+            AI products, digital strategy, creative direction, or something that needs all three. Tell me what
+            you’re building.
+          </motion.p>
+
+          {/* Email: copy is the primary action, mailto is the fallback */}
+          <div className="mt-14 flex flex-col sm:flex-row sm:items-center gap-4">
+            <Magnetic strength={0.15}>
+              <button
+                onClick={() => copy(profile.email)}
+                className="group relative flex items-center gap-4 rounded-full border border-current/20 pl-7 pr-2 py-2 text-left"
+                style={{ borderColor: "color-mix(in srgb, currentColor 25%, transparent)" }}
+                aria-live="polite"
+              >
+                <span className="text-lg md:text-2xl font-serif italic">{profile.email}</span>
+                <span className="relative w-28 h-11 rounded-full bg-accent text-white overflow-hidden flex items-center justify-center font-mono text-[10px] uppercase tracking-[0.2em]">
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.span
+                      key={copied ? "done" : "copy"}
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: -20, opacity: 0 }}
+                      transition={{ duration: 0.3, ease }}
+                    >
+                      {copied ? "Copied ✦" : "Copy"}
+                    </motion.span>
+                  </AnimatePresence>
                 </span>
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <div
-        className="py-8"
-        style={{ borderTop: "1px solid var(--color-border)" }}
-      >
-        <div className="max-w-7xl mx-auto px-6 md:px-10 flex flex-col md:flex-row items-center justify-between gap-4">
-          <span
-            className="font-mono text-[11px] tracking-wider"
-            style={{ color: "var(--color-text-muted)" }}
-          >
-            © {new Date().getFullYear()} Swapnil Shrestha
-          </span>
-
-          <span
-            className="font-mono text-[11px] tracking-wider"
-            style={{ color: "var(--color-text-muted)" }}
-          >
-            Kathmandu, Nepal
-          </span>
-
-          {/* Back to top */}
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="group flex items-center gap-2 transition-colors duration-300 hover:text-accent"
-            style={{ color: "var(--color-text-muted)" }}
-          >
-            <span className="font-mono text-[11px] uppercase tracking-wider">
-              Back to top
-            </span>
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              className="transition-transform duration-300 group-hover:-translate-y-1"
+              </button>
+            </Magnetic>
+            <a
+              href={`mailto:${profile.email}`}
+              className="group px-2 font-mono text-[11px] uppercase tracking-[0.2em] opacity-70 hover:opacity-100 transition-opacity"
             >
-              <path d="M12 19V5M5 12l7-7 7 7" />
-            </svg>
-          </button>
+              <RollText>or open mail app ↗</RollText>
+            </a>
+          </div>
+
+          {/* Meta row */}
+          <div
+            className="mt-24 pt-10 grid grid-cols-2 md:grid-cols-4 gap-10"
+            style={{ borderTop: "1px solid color-mix(in srgb, currentColor 15%, transparent)" }}
+          >
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.25em] opacity-50 mb-4">Elsewhere</p>
+              <ul className="space-y-2">
+                {socials.map((s) => (
+                  <li key={s.name}>
+                    <a href={s.url} target="_blank" rel="noopener noreferrer" className="group text-sm uppercase tracking-[0.14em]">
+                      <RollText>{s.name}</RollText>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.25em] opacity-50 mb-4">Local time</p>
+              <p className="text-3xl font-serif tabular-nums">{time}</p>
+              <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.2em] opacity-60">
+                {awake ? "Likely at my desk" : "Asleep, will reply soon"}
+              </p>
+            </div>
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.25em] opacity-50 mb-4">Résumé</p>
+              <a href={profile.resume} target="_blank" rel="noopener noreferrer" className="group text-sm uppercase tracking-[0.14em]">
+                <RollText>Download CV ↗</RollText>
+              </a>
+            </div>
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.25em] opacity-50 mb-4">Status</p>
+              <p className="flex items-center gap-2 text-sm">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                Open to opportunities
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Closing Nepali cultural touch — bookends the Namaste opening */}
-      <div className="py-6 text-center">
-        <span
-          className="font-nepali text-2xl"
-          style={{ color: "var(--color-accent)", opacity: 0.75 }}
+      {/* Closing bookend: नमस्ते opened the story, धन्यवाद closes it */}
+      <div className="relative overflow-hidden">
+        <motion.p
+          style={{ y: thanksY, opacity: thanksOpacity }}
+          className="font-nepali font-bold text-center leading-[1.1] text-[26vw] md:text-[20vw] text-accent select-none"
+          lang="ne"
         >
-          wGojafb
-        </span>
+          {profile.thanks}
+        </motion.p>
+      </div>
+
+      <div
+        className="max-w-7xl mx-auto px-6 md:px-10 py-6 flex flex-col md:flex-row items-center justify-between gap-3 font-mono text-[10px] uppercase tracking-[0.2em] opacity-60"
+        style={{ borderTop: "1px solid color-mix(in srgb, currentColor 15%, transparent)" }}
+      >
+        <span>© {new Date().getFullYear()} {profile.name}</span>
+        <span>Designed & built in {profile.location}</span>
+        <button onClick={() => scrollToId("hero")} className="group">
+          <RollText>Back to the beginning ↑</RollText>
+        </button>
       </div>
     </section>
   );

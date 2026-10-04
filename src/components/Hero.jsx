@@ -1,231 +1,170 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { profile } from "../data/content";
+import { scrollToId, useKathmanduClock } from "../lib/interaction";
+import { Magnetic, RollText } from "./ui";
 
-const Hero = () => {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  });
+const ease = [0.16, 1, 0.3, 1];
+const disciplines = ["Artificial Intelligence", "Design", "Digital Content", "Technology", "Business", "Visual Storytelling"];
 
-  const nameY = useTransform(scrollYProgress, [0, 1], [0, -150]);
-  const taglineY = useTransform(scrollYProgress, [0, 1], [0, -80]);
-  const opacityOut = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
-  const scaleOut = useTransform(scrollYProgress, [0, 0.8], [1, 0.92]);
-  const nepaliScale = useTransform(scrollYProgress, [0, 1], [1, 1.3]);
-  const nepaliOpacity = useTransform(scrollYProgress, [0, 0.5], [0.04, 0]);
+const StatusHUD = ({ ready }) => {
+  const { time, awake } = useKathmanduClock();
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={ready ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.8, delay: 0.9, ease }}
+      className="flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[10px] md:text-[11px] uppercase tracking-[0.22em] text-muted"
+    >
+      <span className="flex items-center gap-2">
+        <span className="relative flex h-2 w-2">
+          <span className={`absolute inline-flex h-full w-full rounded-full opacity-60 ${awake ? "animate-ping bg-emerald-500" : "bg-amber-400"}`} />
+          <span className={`relative inline-flex h-2 w-2 rounded-full ${awake ? "bg-emerald-500" : "bg-amber-400"}`} />
+        </span>
+        {awake ? "Awake & building" : "Recharging"}
+      </span>
+      <span>
+        Kathmandu <span className="text-primary">{time}</span> NPT
+      </span>
+      <span className="hidden sm:inline">{profile.coords}</span>
+    </motion.div>
+  );
+};
 
-  const titleWords = "Swapnil Shrestha".split("");
+const Hero = ({ ready }) => {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
 
-  // Framer Motion Variants
-  const containerVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        delayChildren: 0.1, // Minimal initial delay
-        staggerChildren: 0.1, // Faster stagger between sections
-      },
-    },
-  };
+  const nameY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
+  const fade = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
+  const watermarkScale = useTransform(scrollYProgress, [0, 1], [1, 1.35]);
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
-    },
-  };
+  // Pointer parallax on the watermark
+  const px = useMotionValue(0);
+  const py = useMotionValue(0);
+  const wx = useSpring(px, { stiffness: 40, damping: 20 });
+  const wy = useSpring(py, { stiffness: 40, damping: 20 });
 
-  const titleVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.03, // Fast letter-by-letter reveal
-      },
-    },
-  };
+  useEffect(() => {
+    const onMove = (e) => {
+      px.set((e.clientX / window.innerWidth - 0.5) * -40);
+      py.set((e.clientY / window.innerHeight - 0.5) * -24);
+    };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    return () => window.removeEventListener("pointermove", onMove);
+  }, [px, py]);
 
-  const letterVariants = {
-    hidden: { opacity: 0, y: 50, filter: "blur(8px)" },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-    },
-  };
+  const [first, last] = profile.name.split(" ");
 
   return (
     <section
       id="hero"
-      ref={containerRef}
-      className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
-      style={{ backgroundColor: "var(--color-bg)" }}
+      ref={ref}
+      data-chapter="hero"
+      className="relative min-h-[100svh] flex flex-col overflow-hidden"
     >
-      {/* Background Nepali watermark — parallax */}
+      {/* Devanagari watermark: real Unicode text, decorative only */}
       <motion.div
-        style={{ scale: nepaliScale, opacity: nepaliOpacity }}
+        aria-hidden="true"
+        style={{ x: wx, y: wy, scale: watermarkScale, opacity: fade }}
         className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
       >
-        <span
-          className="font-nepali text-[18rem] md:text-[30rem] lg:text-[42rem] leading-none whitespace-nowrap"
-          style={{ color: "var(--color-text)" }}
+        <motion.span
+          initial={{ opacity: 0 }}
+          animate={ready ? { opacity: 0.05 } : {}}
+          transition={{ duration: 2, delay: 0.3 }}
+          className="font-nepali font-bold text-[42vw] md:text-[32vw] leading-none whitespace-nowrap text-primary"
         >
-          gd:t]
-        </span>
+          {profile.greeting}
+        </motion.span>
       </motion.div>
 
-      {/* Main content wrapped in stagger container */}
-      <motion.div
-        style={{ y: nameY, opacity: opacityOut, scale: scaleOut }}
-        className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 text-center"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        {/* Eyebrow */}
-        <motion.p
-          variants={itemVariants}
-          className="font-serif italic text-lg md:text-xl mb-6"
-          style={{ color: "var(--color-text-secondary)" }}
-        >
-          Namaste, I am
-        </motion.p>
+      <div className="relative z-10 flex-1 flex flex-col max-w-7xl w-full mx-auto px-6 md:px-10 pt-28 md:pt-36 pb-10">
+        <StatusHUD ready={ready} />
 
-        {/* Name — letter-by-letter reveal */}
-        <motion.h1
-          variants={titleVariants}
-          className="text-display font-sans font-bold tracking-tight mb-6"
-          style={{ color: "var(--color-text)" }}
-        >
-          {titleWords.map((letter, i) => {
-            if (letter === " ") {
-              return (
-                <span key={i}>
-                  <span className="hidden md:inline-block">&nbsp;</span>
-                  <br className="block md:hidden" />
-                </span>
-              );
-            }
-            return (
-              <motion.span
-                key={i}
-                variants={letterVariants}
-                className="inline-block"
-              >
-                {letter}
-              </motion.span>
-            );
-          })}
-        </motion.h1>
+        <motion.div style={{ y: nameY, opacity: fade }} className="flex-1 flex flex-col justify-center py-12">
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={ready ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.1, ease }}
+            className="font-serif italic text-xl md:text-2xl text-secondary mb-4"
+          >
+            <span className="font-nepali not-italic">{profile.greeting}</span>, I am
+          </motion.p>
 
-        {/* Role titles */}
-        <motion.div
-          variants={itemVariants}
-          className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 md:gap-x-5 mb-10"
-        >
-          {[
-            "Full-Stack Engineer",
-            "AI-Augmented Builder",
-            "Visual Storyteller",
-            "Content Designer",
-          ].map((title, i) => (
-            <span key={title} className="flex items-center gap-3 md:gap-5">
-              <span
-                className="text-sm md:text-base font-light tracking-wide"
-                style={{ color: "var(--color-text-secondary)" }}
-              >
-                {title}
+          <h1 className="text-mega font-sans font-semibold text-primary" aria-label={profile.name}>
+            {[first, last].map((word, wi) => (
+              <span key={word} className="block overflow-hidden pb-[0.04em]" aria-hidden="true">
+                <motion.span
+                  className={`block ${wi === 1 ? "md:pl-[12vw]" : ""}`}
+                  initial={{ y: "105%" }}
+                  animate={ready ? { y: "0%" } : {}}
+                  transition={{ duration: 1.2, delay: 0.15 + wi * 0.12, ease }}
+                >
+                  {word}
+                  {wi === 1 && <span className="text-accent">.</span>}
+                </motion.span>
               </span>
-              {i < 3 && (
-                <span
-                  className="w-1 h-1 rounded-full hidden sm:block"
-                  style={{ backgroundColor: "var(--color-accent)" }}
-                />
-              )}
-            </span>
-          ))}
+            ))}
+          </h1>
+
+          <div className="mt-10 md:mt-14 grid md:grid-cols-12 gap-8 items-end">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={ready ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.9, delay: 0.55, ease }}
+              className="md:col-span-6 text-2xl md:text-[2.1rem] font-serif leading-[1.2] text-primary"
+            >
+              A {profile.title.toLowerCase()} building where{" "}
+              <em className="text-accent">code</em>, <em>craft</em> &amp; <em>intelligence</em> meet.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={ready ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.9, delay: 0.7, ease }}
+              className="md:col-span-6 flex flex-wrap items-center gap-4 md:justify-end"
+            >
+              <Magnetic>
+                <button
+                  onClick={() => scrollToId("convergence")}
+                  className="group relative inline-flex items-center gap-3 rounded-full bg-primary text-bg px-7 py-4 text-[12px] font-medium uppercase tracking-[0.16em] overflow-hidden"
+                >
+                  <span className="absolute inset-0 bg-accent translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out-expo" />
+                  <span className="relative">
+                    <RollText>Begin the story</RollText>
+                  </span>
+                  <span className="relative transition-transform duration-500 group-hover:translate-y-0.5">↓</span>
+                </button>
+              </Magnetic>
+              <Magnetic strength={0.2}>
+                <button
+                  onClick={() => scrollToId("work")}
+                  className="group px-2 py-4 text-[12px] font-medium uppercase tracking-[0.16em] text-secondary"
+                >
+                  <RollText>Skip to work →</RollText>
+                </button>
+              </Magnetic>
+            </motion.div>
+          </div>
         </motion.div>
+      </div>
 
-        {/* Tagline */}
-        <motion.p
-          variants={itemVariants}
-          className="font-serif italic text-lg md:text-2xl max-w-2xl mx-auto mb-14 leading-relaxed"
-          style={{ color: "var(--color-text-muted)" }}
-        >
-          Building the bridge between code, creativity & intelligence
-        </motion.p>
-
-        {/* CTA Buttons */}
-        <motion.div
-          variants={itemVariants}
-          className="flex flex-col sm:flex-row gap-5 justify-center items-center"
-        >
-          <button
-            onClick={() =>
-              document
-                .getElementById("projects")
-                ?.scrollIntoView({ behavior: "smooth" })
-            }
-            className="group relative px-8 py-3.5 rounded-full font-medium text-sm uppercase tracking-[0.12em] overflow-hidden transition-transform duration-300 hover:-translate-y-0.5"
-            style={{
-              backgroundColor: "var(--color-text)",
-              color: "var(--color-bg)",
-            }}
-          >
-            <span className="relative z-10">View Selected Work</span>
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{ backgroundColor: "var(--color-accent)" }}
-            />
-          </button>
-
-          <button
-            onClick={() =>
-              document
-                .getElementById("contact")
-                ?.scrollIntoView({ behavior: "smooth" })
-            }
-            className="font-serif italic text-base transition-colors duration-300 hover:text-accent group"
-            style={{ color: "var(--color-text-secondary)" }}
-          >
-            Get in touch
-            <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform duration-300">
-              →
-            </span>
-          </button>
-        </motion.div>
-      </motion.div>
-
-      {/* Scroll indicator */}
+      {/* Discipline marquee */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.0, duration: 1 }}
-        style={{ opacity: opacityOut }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
+        animate={ready ? { opacity: 1 } : {}}
+        transition={{ delay: 1.1, duration: 1 }}
+        className="relative z-10 border-y border-border py-4 overflow-hidden"
+        aria-hidden="true"
       >
-        <span
-          className="font-mono text-[10px] uppercase tracking-[0.3em]"
-          style={{ color: "var(--color-text-muted)" }}
-        >
-          Scroll
-        </span>
-        <div
-          className="w-[1px] h-12 overflow-hidden"
-          style={{ backgroundColor: "var(--color-border)" }}
-        >
-          <motion.div
-            animate={{ y: ["-100%", "200%"] }}
-            transition={{
-              duration: 1.8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="w-full h-1/3"
-            style={{ backgroundColor: "var(--color-accent)" }}
-          />
+        <div className="marquee flex w-max gap-10 whitespace-nowrap">
+          {[...disciplines, ...disciplines, ...disciplines, ...disciplines].map((d, i) => (
+            <span key={i} className="flex items-center gap-10 font-serif italic text-2xl md:text-3xl text-secondary">
+              {d}
+              <span className="text-accent not-italic text-base">✦</span>
+            </span>
+          ))}
         </div>
       </motion.div>
     </section>

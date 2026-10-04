@@ -13,6 +13,7 @@ export default {
         muted: "var(--color-text-muted)",
         accent: "var(--color-accent)",
         "accent-soft": "var(--color-accent-soft)",
+        gold: "var(--color-gold)",
         border: "var(--color-border)",
         "border-hover": "var(--color-border-hover)",
       },
@@ -20,7 +21,7 @@ export default {
         sans: ["Inter", "-apple-system", "sans-serif"],
         serif: ["Instrument Serif", "serif"],
         mono: ["JetBrains Mono", "monospace"],
-        nepali: ["NepaliFont", "sans-serif"],
+        nepali: ["Sahitya", "Noto Serif Devanagari", "serif"],
       },
       animation: {
         "fade-in": "fadeIn 1.2s var(--ease-out-expo) forwards",

@@ -1,68 +1,72 @@
-import { useEffect, useRef } from "react";
+import { MotionConfig } from "framer-motion";
+import { useEffect, useMemo, useState } from "react";
+import Lenis from "lenis";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import About from "./components/About";
-import Experience from "./components/Experience";
-import Projects from "./components/Projects";
+import Convergence from "./components/Convergence";
+import Work from "./components/Work";
+import Chronicle from "./components/Chronicle";
 import Contact from "./components/Contact";
 import Preloader from "./components/Preloader";
-import { useState } from "react";
+import ChapterHUD, { AmbientGlow } from "./components/ChapterHUD";
+import { AmbientProvider, setLenis, useActiveChapter, usePrefersReducedMotion } from "./lib/interaction";
 
 const App = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const mainRef = useRef(null);
+  const [introDone, setIntroDone] = useState(false);
+  const [ambient, setAmbient] = useState(null);
+  const reducedMotion = usePrefersReducedMotion();
+  const activeChapter = useActiveChapter();
 
+  // Smooth scroll. Starts immediately; the page is never unmounted behind the intro.
   useEffect(() => {
-    // Initialize Lenis smooth scroll
-    let lenis;
-    const initLenis = async () => {
-      try {
-        const Lenis = (await import("lenis")).default;
-        lenis = new Lenis({
-          duration: 1.2,
-          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-          direction: "vertical",
-          gestureDirection: "vertical",
-          smooth: true,
-          smoothTouch: false,
-          touchMultiplier: 2,
-        });
-
-        function raf(time) {
-          lenis.raf(time);
-          requestAnimationFrame(raf);
-        }
-        requestAnimationFrame(raf);
-      } catch (e) {
-        console.warn("Lenis not available, using native scroll");
-      }
+    if (reducedMotion) return;
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+    setLenis(lenis);
+    let frame;
+    const raf = (time) => {
+      lenis.raf(time);
+      frame = requestAnimationFrame(raf);
     };
-
-    if (!isLoading) {
-      initLenis();
-    }
-
+    frame = requestAnimationFrame(raf);
     return () => {
-      if (lenis) lenis.destroy();
+      cancelAnimationFrame(frame);
+      lenis.destroy();
+      setLenis(null);
     };
-  }, [isLoading]);
+  }, [reducedMotion]);
+
+  // The mood only belongs to the exhibits; everywhere else it fades out.
+  const glow = activeChapter === "work" ? ambient : null;
+  const ambientValue = useMemo(() => ({ color: ambient, setColor: setAmbient }), [ambient]);
 
   return (
-    <div className="noise-overlay">
-      <Preloader onComplete={() => setIsLoading(false)} />
-      {!isLoading && (
-        <>
+    <MotionConfig reducedMotion="user">
+      <AmbientProvider value={ambientValue}>
+        <div className="noise-overlay">
+          <a
+            href="#convergence"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:rounded-full focus:bg-primary focus:text-bg"
+          >
+            Skip to content
+          </a>
+          <Preloader onDone={() => setIntroDone(true)} />
+          <AmbientGlow color={glow} />
           <Navbar />
-          <main ref={mainRef} className="flex flex-col">
-            <Hero />
-            <About />
-            <Experience />
-            <Projects />
+          <main className="relative z-10">
+            <Hero ready={introDone} />
+            <Convergence />
+            <Work />
+            <Chronicle />
             <Contact />
           </main>
-        </>
-      )}
-    </div>
+          <ChapterHUD active={activeChapter} />
+        </div>
+      </AmbientProvider>
+    </MotionConfig>
   );
 };
 
